@@ -1,0 +1,988 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Matthieu Balluais — Ingénieur Biotechnologie</title>
+  <meta name="description" content="Portfolio de Matthieu Balluais — Ingénieur Biotechnologie Opérationnelle spécialisé Bioproduction Industrielle Pharmaceutique, Sapeur-Pompier." />
+  <meta name="author" content="Matthieu Balluais" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Lora:ital,wght@0,400;0,500;1,400&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet" />
+
+  <script>
+    (function () {
+      var saved = localStorage.getItem('matt-theme');
+      var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      if (saved === 'light' || (!saved && !prefersDark)) {
+        document.documentElement.setAttribute('data-theme', 'light');
+      } else {
+        document.documentElement.setAttribute('data-theme', 'dark');
+      }
+    })();
+  </script>
+
+  <style>
+    :root {
+      --bg:       #0e1420;
+      --surface:  #172033;
+      --surface2: #1e2a40;
+      --border:   rgba(255,255,255,0.07);
+      --border2:  rgba(255,255,255,0.13);
+      --text:     #dde3ee;
+      --text2:    #a8b3c8;
+      --muted:    #6a7590;
+      --accent:   #4db8c8;
+      --accent2:  #2e9aaa;
+      --red:      #e05c5c;
+    }
+
+    [data-theme="light"] {
+      --bg:       #f3f5f8;
+      --surface:  #e8ecf2;
+      --surface2: #dde3ec;
+      --border:   rgba(0,0,0,0.08);
+      --border2:  rgba(0,0,0,0.15);
+      --text:     #1a2135;
+      --text2:    #3d4a60;
+      --muted:    #7a8499;
+      --accent:   #1a8a9a;
+      --accent2:  #117080;
+      --red:      #c0392b;
+    }
+
+    [data-theme="light"] nav { background: rgba(243,245,248,0.92); }
+    [data-theme="light"] .btn-primary { color: #f3f5f8; }
+    [data-theme="light"] #back-to-top { background: rgba(243,245,248,0.88); }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; scrollbar-width: thin; scrollbar-color: var(--accent2) var(--surface); }
+    ::-webkit-scrollbar { width: 5px; }
+    ::-webkit-scrollbar-track { background: var(--surface); }
+    ::-webkit-scrollbar-thumb { background: var(--accent2); border-radius: 99px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--accent); }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Lora', Georgia, serif;
+      font-size: 17px;
+      line-height: 1.75;
+      overflow-x: hidden;
+    }
+
+    /* grain */
+    body::before {
+      content: ''; position: fixed; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+      opacity: 0.03; pointer-events: none; z-index: 10;
+    }
+
+    /* skip */
+    .skip-link {
+      position: fixed; top: 1rem; left: 1rem; z-index: 9999;
+      padding: 0.65rem 1.2rem; background: var(--accent); color: var(--bg);
+      font-family: 'DM Mono', monospace; font-size: 0.68rem; letter-spacing: 0.14em;
+      text-transform: uppercase; text-decoration: none; border-radius: 2px;
+      transform: translateY(-200%); opacity: 0; transition: transform 0.2s, opacity 0.2s;
+    }
+    .skip-link:focus { transform: translateY(0); opacity: 1; }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 1.1rem 4rem;
+      background: rgba(14,20,32,0.90);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+      transition: padding 0.3s;
+    }
+    .nav-logo { font-family: 'Cinzel', serif; font-size: 0.8rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--text); text-decoration: none; }
+    .nav-logo span { color: var(--accent); }
+    .nav-links { display: flex; gap: 2rem; list-style: none; align-items: center; }
+    .nav-links a {
+      font-family: 'DM Mono', monospace; font-size: 0.62rem; letter-spacing: 0.16em;
+      text-transform: uppercase; color: var(--muted); text-decoration: none;
+      transition: color 0.25s; padding: 0.5rem 0.3rem; position: relative;
+    }
+    .nav-links a:hover { color: var(--text); }
+    .nav-links a:not(.nav-cv)::after {
+      content: ''; position: absolute; bottom: 0.4rem; left: 50%; right: 50%;
+      height: 1px; background: var(--accent); transition: left .22s, right .22s;
+    }
+    .nav-links a:not(.nav-cv):hover::after { left: 0.3rem; right: 0.3rem; }
+    .nav-cv { color: var(--accent) !important; border: 1px solid var(--accent) !important; padding: 0.4rem 0.9rem !important; transition: all 0.25s !important; }
+    .nav-cv:hover { background: var(--accent) !important; color: var(--bg) !important; }
+
+    .nav-right { display: flex; align-items: center; gap: 1rem; }
+
+    /* lang toggle */
+    .lang-btn {
+      font-family: 'DM Mono', monospace; font-size: 0.6rem; letter-spacing: 0.14em;
+      text-transform: uppercase; background: none; border: 1px solid var(--border2);
+      color: var(--muted); cursor: pointer; padding: 0.3rem 0.55rem; border-radius: 2px;
+      transition: color 0.25s, border-color 0.25s;
+    }
+    .lang-btn:hover { color: var(--accent); border-color: var(--accent); }
+
+    /* theme toggle */
+    .theme-btn {
+      background: none; border: 1px solid var(--border2); border-radius: 2px;
+      width: 30px; height: 30px; display: flex; align-items: center; justify-content: center;
+      color: var(--muted); cursor: pointer; transition: color 0.25s, border-color 0.25s;
+    }
+    .theme-btn:hover { color: var(--accent); border-color: var(--accent); }
+    .theme-btn .icon-moon { display: none; }
+    .theme-btn .icon-sun  { display: block; }
+    [data-theme="light"] .theme-btn .icon-sun  { display: none; }
+    [data-theme="light"] .theme-btn .icon-moon { display: block; }
+
+    /* ── HAMBURGER ── */
+    .burger {
+      display: none; flex-direction: column; gap: 5px; background: none; border: none;
+      cursor: pointer; padding: 4px;
+    }
+    .burger span { display: block; width: 22px; height: 1.5px; background: var(--text2); transition: all 0.3s; }
+    .burger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+    .burger.open span:nth-child(2) { opacity: 0; }
+    .burger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+    .nav-drawer {
+      display: none; position: fixed; top: 0; right: 0; bottom: 0; width: 260px;
+      background: var(--surface); border-left: 1px solid var(--border2);
+      padding: 5rem 2rem 2rem; flex-direction: column; gap: 0; z-index: 150;
+      transform: translateX(100%); transition: transform 0.3s ease;
+    }
+    .nav-drawer.open { transform: translateX(0); }
+    .nav-drawer a { font-family: 'DM Mono', monospace; font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); text-decoration: none; padding: 0.9rem 0; border-bottom: 1px solid var(--border); display: block; transition: color 0.2s; }
+    .nav-drawer a:hover { color: var(--accent); }
+
+    /* ── HERO ── */
+    #accueil {
+      min-height: 100vh; display: flex; flex-direction: column;
+      justify-content: center; align-items: center; text-align: center;
+      padding: 8rem 2rem 5rem; position: relative; overflow: hidden;
+    }
+    #accueil::before {
+      content: ''; position: absolute; inset: 0; pointer-events: none;
+      background:
+        radial-gradient(ellipse 60% 50% at 50% 50%, rgba(77,184,200,0.07) 0%, transparent 65%),
+        radial-gradient(ellipse 40% 35% at 80% 20%, rgba(224,92,92,0.04) 0%, transparent 60%);
+      animation: heroPulse 14s ease-in-out infinite;
+    }
+    @keyframes heroPulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+    @media (prefers-reduced-motion: reduce) { #accueil::before { animation: none; } }
+
+    .hero-content { position: relative; z-index: 1; }
+
+    .hero-eyebrow {
+      font-family: 'DM Mono', monospace; font-size: 0.65rem; letter-spacing: 0.38em;
+      text-transform: uppercase; color: var(--accent); margin-bottom: 1.6rem;
+      opacity: 0; animation: fadeUp 0.9s ease forwards 0.3s;
+    }
+    .hero-title {
+      font-family: 'Cinzel', serif; font-size: clamp(3rem, 8vw, 6.5rem);
+      font-weight: 700; line-height: 1.05; letter-spacing: 0.06em;
+      color: var(--text); text-transform: uppercase;
+      opacity: 0; animation: fadeUp 0.9s ease forwards 0.5s;
+    }
+    .hero-name-line {
+      display: block; font-size: clamp(1.2rem, 3.5vw, 2.4rem); letter-spacing: 0.24em;
+      color: var(--text2); font-weight: 400; margin-top: 0.35rem;
+    }
+    .hero-name-line em { font-style: normal; color: var(--accent); font-weight: 600; }
+    .hero-rule {
+      width: 50px; height: 1px;
+      background: linear-gradient(to right, transparent, var(--accent), transparent);
+      margin: 1.8rem auto;
+      opacity: 0; animation: fadeUp 0.9s ease forwards 0.75s;
+    }
+    .hero-sub {
+      font-size: 1rem; color: var(--text2); max-width: 560px; margin: 0 auto;
+      opacity: 0; animation: fadeUp 0.9s ease forwards 0.95s;
+    }
+    .hero-sub strong { color: var(--text); font-weight: 500; }
+    .hero-badges {
+      display: flex; gap: 0.75rem; flex-wrap: wrap; justify-content: center;
+      margin-top: 1.8rem; opacity: 0; animation: fadeUp 0.9s ease forwards 1.1s;
+    }
+    .badge {
+      font-family: 'DM Mono', monospace; font-size: 0.58rem; letter-spacing: 0.15em;
+      text-transform: uppercase; padding: 0.35rem 0.75rem; border: 1px solid var(--border2);
+      border-radius: 2px; color: var(--muted);
+    }
+    .badge-accent { border-color: var(--accent); color: var(--accent); }
+    .badge-red { border-color: var(--red); color: var(--red); }
+
+    .hero-btns {
+      display: flex; gap: 1rem; margin-top: 2.5rem; flex-wrap: wrap;
+      justify-content: center; opacity: 0; animation: fadeUp 0.9s ease forwards 1.25s;
+    }
+
+    .btn {
+      font-family: 'DM Mono', monospace; font-size: 0.65rem; letter-spacing: 0.18em;
+      text-transform: uppercase; padding: 0.85rem 2rem; text-decoration: none;
+      border: 1px solid; transition: all 0.28s; display: inline-block; cursor: pointer;
+    }
+    .btn-primary { background: var(--accent); color: var(--bg); border-color: var(--accent); font-weight: 600; }
+    .btn-primary:hover { background: var(--accent2); border-color: var(--accent2); }
+    .btn-ghost { background: transparent; color: var(--text2); border-color: var(--border2); }
+    .btn-ghost:hover { border-color: var(--text2); color: var(--text); }
+
+    .scroll-cue {
+      position: absolute; bottom: 2.5rem; left: 50%; transform: translateX(-50%);
+      display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
+      opacity: 0; animation: fadeIn 1s ease forwards 1.8s;
+    }
+    .scroll-cue span { font-family: 'DM Mono', monospace; font-size: 0.55rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--muted); }
+    .scroll-cue-line { width: 1px; height: 32px; background: linear-gradient(to bottom, var(--accent2), transparent); animation: linePulse 2.2s ease-in-out infinite; }
+    @keyframes linePulse { 0%,100%{opacity:.3} 50%{opacity:1} }
+
+    /* ── SECTIONS ── */
+    section { position: relative; z-index: 1; border-top: 1px solid var(--border); }
+    .section-wrap { max-width: 1040px; margin: 0 auto; padding: 6rem 2rem; }
+    .s-eyebrow { font-family: 'DM Mono', monospace; font-size: 0.62rem; letter-spacing: 0.32em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.75rem; }
+    .s-title { font-family: 'Cinzel', serif; font-size: clamp(1.6rem, 3.5vw, 2.4rem); font-weight: 600; color: var(--text); margin-bottom: 0.5rem; }
+    .s-sub { color: var(--text2); max-width: 560px; font-size: 0.95rem; margin-bottom: 3rem; }
+
+    /* fade-in on scroll */
+    .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.7s ease, transform 0.7s ease; }
+    .reveal.visible { opacity: 1; transform: none; }
+
+    /* ── ABOUT ── */
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3.5rem; align-items: start; }
+    .about-text p { color: var(--text2); margin-bottom: 1.1rem; font-size: 0.97rem; }
+    .about-text p strong { color: var(--text); font-weight: 500; }
+    .about-info { display: flex; flex-direction: column; gap: 0.6rem; margin-top: 1.8rem; }
+    .about-info-row { display: flex; gap: 1rem; font-size: 0.88rem; }
+    .about-info-label { font-family: 'DM Mono', monospace; font-size: 0.6rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); min-width: 80px; padding-top: 0.22rem; }
+    .about-info-value { color: var(--text2); }
+
+    .about-stats { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+    .stat-card {
+      background: var(--surface); border: 1px solid var(--border); padding: 1.4rem 1.2rem;
+      border-radius: 3px;
+    }
+    .stat-number { font-family: 'Cinzel', serif; font-size: 2rem; font-weight: 700; color: var(--accent); line-height: 1; margin-bottom: 0.3rem; }
+    .stat-label { font-family: 'DM Mono', monospace; font-size: 0.6rem; letter-spacing: 0.13em; text-transform: uppercase; color: var(--muted); }
+
+    /* ── TIMELINE EXPERIENCE ── */
+    .timeline { position: relative; padding-left: 2rem; }
+    .timeline::before {
+      content: ''; position: absolute; left: 0; top: 0.5rem; bottom: 0;
+      width: 1px; background: linear-gradient(to bottom, var(--accent), transparent);
+    }
+    .tl-item { position: relative; padding-bottom: 2.8rem; }
+    .tl-item:last-child { padding-bottom: 0; }
+    .tl-dot {
+      position: absolute; left: -2rem; top: 0.5rem;
+      width: 9px; height: 9px; border-radius: 50%;
+      background: var(--accent); border: 2px solid var(--bg);
+      transform: translateX(-4px);
+    }
+    .tl-dot.red { background: var(--red); }
+    .tl-period { font-family: 'DM Mono', monospace; font-size: 0.6rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.3rem; }
+    .tl-role { font-family: 'Cinzel', serif; font-size: 1.05rem; font-weight: 600; color: var(--text); margin-bottom: 0.15rem; }
+    .tl-company { font-size: 0.88rem; color: var(--accent); margin-bottom: 0.6rem; font-style: italic; }
+    .tl-desc { font-size: 0.9rem; color: var(--text2); }
+    .tl-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.7rem; }
+    .tl-tag { font-family: 'DM Mono', monospace; font-size: 0.56rem; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.22rem 0.55rem; border: 1px solid var(--border2); color: var(--muted); border-radius: 2px; }
+
+    /* ── SKILLS ── */
+    .skills-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+    .skill-block { background: var(--surface); border: 1px solid var(--border); padding: 1.5rem; border-radius: 3px; transition: border-color 0.25s, transform 0.25s; }
+    .skill-block:hover { border-color: var(--accent); transform: translateY(-3px); }
+    .skill-block-icon { font-size: 1.4rem; margin-bottom: 0.8rem; }
+    .skill-block-title { font-family: 'Cinzel', serif; font-size: 0.88rem; font-weight: 600; color: var(--text); margin-bottom: 0.7rem; }
+    .skill-list { list-style: none; display: flex; flex-direction: column; gap: 0.3rem; }
+    .skill-list li { font-size: 0.85rem; color: var(--text2); display: flex; align-items: baseline; gap: 0.5rem; }
+    .skill-list li::before { content: '—'; color: var(--accent); font-size: 0.7rem; flex-shrink: 0; }
+
+    /* lang bars */
+    .lang-item { margin-bottom: 1.2rem; }
+    .lang-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 0.4rem; }
+    .lang-name { font-family: 'DM Mono', monospace; font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text); }
+    .lang-level { font-size: 0.78rem; color: var(--muted); }
+    .lang-bar { height: 2px; background: var(--border2); border-radius: 99px; overflow: hidden; }
+    .lang-fill { height: 100%; background: var(--accent); border-radius: 99px; transition: width 1.2s cubic-bezier(.25,.8,.25,1); width: 0; }
+
+    /* ── FORMATION ── */
+    .edu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; }
+    .edu-card { background: var(--surface); border: 1px solid var(--border); border-left: 3px solid var(--accent); padding: 1.4rem; border-radius: 3px; }
+    .edu-year { font-family: 'DM Mono', monospace; font-size: 0.6rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.4rem; }
+    .edu-title { font-size: 0.95rem; font-weight: 500; color: var(--text); margin-bottom: 0.2rem; }
+    .edu-school { font-size: 0.84rem; color: var(--muted); }
+
+    /* ── POMPIER ── */
+    .pompier-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem; align-items: start; }
+    .pompier-text p { color: var(--text2); font-size: 0.97rem; margin-bottom: 1rem; }
+    .pompier-qualities { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1.2rem; }
+    .quality-pill { font-family: 'DM Mono', monospace; font-size: 0.58rem; letter-spacing: 0.12em; text-transform: uppercase; padding: 0.3rem 0.65rem; border: 1px solid var(--red); color: var(--red); border-radius: 2px; }
+    .pompier-history { background: var(--surface); border: 1px solid var(--border); padding: 1.5rem; border-radius: 3px; }
+    .pompier-history-title { font-family: 'DM Mono', monospace; font-size: 0.6rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--red); margin-bottom: 1rem; }
+    .pompier-row { display: flex; justify-content: space-between; align-items: baseline; padding: 0.5rem 0; border-bottom: 1px solid var(--border); font-size: 0.88rem; }
+    .pompier-row:last-child { border-bottom: none; }
+    .pompier-row-label { color: var(--text); }
+    .pompier-row-val { color: var(--muted); font-family: 'DM Mono', monospace; font-size: 0.7rem; letter-spacing: 0.08em; }
+
+    /* ── CONTACT ── */
+    .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: start; }
+    .contact-text p { color: var(--text2); font-size: 0.95rem; margin-bottom: 1rem; }
+    .contact-links { display: flex; flex-direction: column; gap: 0.8rem; margin-top: 1.5rem; }
+    .contact-link { display: flex; align-items: center; gap: 0.8rem; text-decoration: none; color: var(--text2); font-size: 0.9rem; transition: color 0.25s; }
+    .contact-link:hover { color: var(--accent); }
+    .contact-link-icon { width: 28px; height: 28px; border: 1px solid var(--border2); border-radius: 2px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .contact-dispo { background: var(--surface); border: 1px solid var(--border); border-left: 3px solid var(--accent); padding: 1.5rem; border-radius: 3px; }
+    .contact-dispo-label { font-family: 'DM Mono', monospace; font-size: 0.6rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.5rem; }
+    .contact-dispo-date { font-family: 'Cinzel', serif; font-size: 1.5rem; font-weight: 700; color: var(--text); margin-bottom: 0.5rem; }
+    .contact-dispo-note { font-size: 0.85rem; color: var(--muted); }
+
+    /* ── FOOTER ── */
+    footer { border-top: 1px solid var(--border); padding: 2rem; text-align: center; }
+    footer p { font-family: 'DM Mono', monospace; font-size: 0.6rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); }
+
+    /* ── BACK TO TOP ── */
+    #back-to-top {
+      position: fixed; bottom: 2rem; right: 2rem; z-index: 100;
+      width: 38px; height: 38px; background: rgba(14,20,32,0.88);
+      border: 1px solid var(--border2); border-radius: 2px;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--muted); cursor: pointer; transition: all 0.25s;
+      opacity: 0; pointer-events: none;
+    }
+    #back-to-top.visible { opacity: 1; pointer-events: auto; }
+    #back-to-top:hover { color: var(--accent); border-color: var(--accent); }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .about-grid, .pompier-grid, .contact-grid { grid-template-columns: 1fr; }
+      .skills-grid { grid-template-columns: 1fr 1fr; }
+      .edu-grid { grid-template-columns: 1fr; }
+      .about-stats { grid-template-columns: repeat(4, 1fr); }
+    }
+    @media (max-width: 680px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { display: none; }
+      .burger { display: flex; }
+      .nav-drawer { display: flex; }
+      .hero-btns { flex-direction: column; align-items: center; }
+      .skills-grid { grid-template-columns: 1fr; }
+      .about-stats { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 420px) {
+      .hero-badges { flex-direction: column; align-items: center; }
+    }
+  </style>
+</head>
+<body>
+
+<a href="#profil" class="skip-link" data-fr="Aller au contenu" data-en="Skip to content">Aller au contenu</a>
+
+<!-- ── BACK TO TOP ── -->
+<button id="back-to-top" aria-label="Retour en haut">
+  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="18 15 12 9 6 15"/></svg>
+</button>
+
+<!-- ── NAV ── -->
+<nav>
+  <a href="#accueil" class="nav-logo">M.<span>B</span></a>
+  <ul class="nav-links">
+    <li><a href="#profil"     data-fr="Profil"      data-en="About">Profil</a></li>
+    <li><a href="#experience" data-fr="Expérience"  data-en="Experience">Expérience</a></li>
+    <li><a href="#competences"data-fr="Compétences" data-en="Skills">Compétences</a></li>
+    <li><a href="#formation"  data-fr="Formation"   data-en="Education">Formation</a></li>
+    <li><a href="#pompier"    data-fr="Pompier"      data-en="Firefighter">Pompier</a></li>
+    <li><a href="#contact"    data-fr="Contact"      data-en="Contact">Contact</a></li>
+  </ul>
+  <div class="nav-right">
+    <button class="lang-btn" id="lang-toggle" aria-label="Changer de langue">EN</button>
+    <button class="theme-btn" id="theme-toggle" aria-label="Changer le thème">
+      <svg class="icon-sun" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+      <svg class="icon-moon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    </button>
+    <button class="burger" id="burger" aria-label="Menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- nav drawer mobile -->
+<nav class="nav-drawer" id="nav-drawer" aria-hidden="true">
+  <a href="#profil"      data-fr="Profil"       data-en="About">Profil</a>
+  <a href="#experience"  data-fr="Expérience"   data-en="Experience">Expérience</a>
+  <a href="#competences" data-fr="Compétences"  data-en="Skills">Compétences</a>
+  <a href="#formation"   data-fr="Formation"    data-en="Education">Formation</a>
+  <a href="#pompier"     data-fr="Pompier"       data-en="Firefighter">Pompier</a>
+  <a href="#contact"     data-fr="Contact"       data-en="Contact">Contact</a>
+</nav>
+
+<!-- ── HERO ── -->
+<section id="accueil" aria-label="Accueil">
+  <div class="hero-content">
+    <p class="hero-eyebrow" data-fr="Ingénieur · Biotechnologie" data-en="Engineer · Biotechnology">Ingénieur · Biotechnologie</p>
+    <h1 class="hero-title">
+      Matthieu
+      <span class="hero-name-line"><em>Balluais</em></span>
+    </h1>
+    <div class="hero-rule"></div>
+    <p class="hero-sub" data-fr="<strong>Bioproduction Industrielle Pharmaceutique</strong> — Assurance Qualité Opérationnelle &amp; Fournisseur. Expérience en environnements BPF, BPC, BPL." data-en="<strong>Industrial Pharmaceutical Bioproduction</strong> — Operational &amp; Supplier Quality Assurance. Experience in GMP, GCP, GLP environments.">
+      <strong>Bioproduction Industrielle Pharmaceutique</strong> — Assurance Qualité Opérationnelle &amp; Fournisseur. Expérience en environnements BPF, BPC, BPL.
+    </p>
+    <div class="hero-badges">
+      <span class="badge badge-accent" data-fr="Master Bac+5" data-en="Master's Degree">Master Bac+5</span>
+      <span class="badge" data-fr="Anglais C1" data-en="English C1">Anglais C1</span>
+      <span class="badge" data-fr="Espagnol B2" data-en="Spanish B2">Espagnol B2</span>
+      <span class="badge badge-red" data-fr="Sapeur-Pompier" data-en="Firefighter">Sapeur-Pompier</span>
+    </div>
+    <div class="hero-btns">
+      <a href="#contact" class="btn btn-primary" data-fr="Me contacter" data-en="Contact me">Me contacter</a>
+      <a href="#experience" class="btn btn-ghost" data-fr="Voir mon parcours" data-en="See my experience">Voir mon parcours</a>
+    </div>
+  </div>
+  <div class="scroll-cue" aria-hidden="true">
+    <span data-fr="Défiler" data-en="Scroll">Défiler</span>
+    <div class="scroll-cue-line"></div>
+  </div>
+</section>
+
+<!-- ── PROFIL ── -->
+<section id="profil" aria-label="Profil">
+  <div class="section-wrap">
+    <p class="s-eyebrow reveal" data-fr="À propos" data-en="About">À propos</p>
+    <h2 class="s-title reveal" data-fr="Profil professionnel" data-en="Professional Profile">Profil professionnel</h2>
+    <div class="about-grid reveal">
+      <div class="about-text">
+        <p data-fr="Diplômé d'un <strong>Master en Management en Bioproduction</strong> (Bac+5), j'ai évolué sur des postes en Assurance Qualité Fournisseur puis en Qualité Opérationnelle, me permettant de maîtriser l'amélioration de process et la gestion des risques en environnement pharmaceutique." data-en="Holding a <strong>Master's degree in Bioproduction Management</strong> (Bac+5), I progressed through Supplier Quality Assurance and Operational Quality roles, developing strong expertise in process improvement and risk management in pharmaceutical environments.">
+          Diplômé d'un <strong>Master en Management en Bioproduction</strong> (Bac+5), j'ai évolué sur des postes en Assurance Qualité Fournisseur puis en Qualité Opérationnelle, me permettant de maîtriser l'amélioration de process et la gestion des risques en environnement pharmaceutique.
+        </p>
+        <p data-fr="Mon expérience couvre des formes pharmaceutiques variées : <strong>forme sèche, liquide, injectable et inhaler</strong>. J'ai travaillé en environnement ZAC A, C et D, avec une maîtrise des réglementations BPF, BPC, BPL et de la norme ISO 9001." data-en="My experience spans various pharmaceutical forms: <strong>solid, liquid, injectable, and inhalation</strong>. I have worked in clean rooms (ZAC A, C, D) with expertise in GMP, GCP, GLP regulations and ISO 9001.">
+          Mon expérience couvre des formes pharmaceutiques variées : <strong>forme sèche, liquide, injectable et inhaler</strong>. J'ai travaillé en environnement ZAC A, C et D, avec une maîtrise des réglementations BPF, BPC, BPL et de la norme ISO 9001.
+        </p>
+        <div class="about-info">
+          <div class="about-info-row">
+            <span class="about-info-label">Email</span>
+            <span class="about-info-value">matthieu.balluais@sfr.fr</span>
+          </div>
+          <div class="about-info-row">
+            <span class="about-info-label" data-fr="Lieu" data-en="Location">Lieu</span>
+            <span class="about-info-value">Talence, Bordeaux (33)</span>
+          </div>
+          <div class="about-info-row">
+            <span class="about-info-label" data-fr="Permis" data-en="License">Permis</span>
+            <span class="about-info-value" data-fr="B + Véhicule" data-en="B + Own vehicle">B + Véhicule</span>
+          </div>
+          <div class="about-info-row">
+            <span class="about-info-label" data-fr="Dispo." data-en="Available">Dispo.</span>
+            <span class="about-info-value" data-fr="Avril 2026" data-en="April 2026">Avril 2026</span>
+          </div>
+        </div>
+      </div>
+      <div class="about-stats">
+        <div class="stat-card reveal">
+          <div class="stat-number">6+</div>
+          <div class="stat-label" data-fr="Années d'expérience" data-en="Years of experience">Années d'expérience</div>
+        </div>
+        <div class="stat-card reveal">
+          <div class="stat-number">5</div>
+          <div class="stat-label" data-fr="Entreprises pharma" data-en="Pharma companies">Entreprises pharma</div>
+        </div>
+        <div class="stat-card reveal">
+          <div class="stat-number">ISO</div>
+          <div class="stat-label" data-fr="Auditeur 9001 / ICH E6" data-en="Auditor 9001 / ICH E6">Auditeur 9001 / ICH E6</div>
+        </div>
+        <div class="stat-card reveal">
+          <div class="stat-number">14+</div>
+          <div class="stat-label" data-fr="Ans sapeur-pompier" data-en="Years as firefighter">Ans sapeur-pompier</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── EXPERIENCE ── -->
+<section id="experience" aria-label="Expérience">
+  <div class="section-wrap">
+    <p class="s-eyebrow reveal" data-fr="Parcours" data-en="Career">Parcours</p>
+    <h2 class="s-title reveal" data-fr="Expérience professionnelle" data-en="Professional Experience">Expérience professionnelle</h2>
+    <p class="s-sub reveal" data-fr="Missions en assurance qualité, bioproduction et R&amp;D pharmaceutique." data-en="Positions in quality assurance, bioproduction and pharmaceutical R&amp;D.">Missions en assurance qualité, bioproduction et R&amp;D pharmaceutique.</p>
+
+    <div class="timeline">
+
+      <div class="tl-item reveal">
+        <div class="tl-dot"></div>
+        <div class="tl-period" data-fr="Janvier 2026 — Actuel (temps plein)" data-en="January 2026 — Present (full-time)">Janvier 2026 — Actuel (temps plein)</div>
+        <div class="tl-role" data-fr="Sapeur-Pompier Professionnel" data-en="Professional Firefighter">Sapeur-Pompier Professionnel</div>
+        <div class="tl-company">SDIS 33 — Gironde</div>
+        <div class="tl-tags">
+          <span class="tl-tag" data-fr="Urgence" data-en="Emergency">Urgence</span>
+          <span class="tl-tag" data-fr="Secours" data-en="Rescue">Secours</span>
+          <span class="tl-tag" data-fr="Disponibilité immédiate" data-en="Immediate response">Disponibilité immédiate</span>
+        </div>
+      </div>
+
+      <div class="tl-item reveal">
+        <div class="tl-dot"></div>
+        <div class="tl-period" data-fr="Avril 2024 — Décembre 2025" data-en="April 2024 — December 2025">Avril 2024 — Décembre 2025</div>
+        <div class="tl-role" data-fr="Responsable Pôle Assurance Qualité" data-en="Head of Quality Assurance">Responsable Pôle Assurance Qualité</div>
+        <div class="tl-company">EUROFINS EVIC Product Testing France — Bordeaux (33)</div>
+        <div class="tl-desc" data-fr="Mise en place et animation de la politique Qualité. Conception et mise à jour du manuel qualité. Auditeur interne et sous-traitants Europe/International. Rédaction d'analyses de risques. Communication en anglais avec les sous-traitants." data-en="Implementation and management of the Quality policy. Design and update of the quality manual. Internal and international subcontractor auditing. Risk analysis writing. English communication with suppliers.">
+          Mise en place et animation de la politique Qualité. Conception et mise à jour du manuel qualité. Auditeur interne et sous-traitants Europe/International. Rédaction d'analyses de risques. Communication en anglais avec les sous-traitants.
+        </div>
+        <div class="tl-tags">
+          <span class="tl-tag">ISO 9001</span>
+          <span class="tl-tag">ICH E6</span>
+          <span class="tl-tag" data-fr="Audit" data-en="Auditing">Audit</span>
+          <span class="tl-tag" data-fr="CAPA" data-en="CAPA">CAPA</span>
+          <span class="tl-tag" data-fr="Anglais" data-en="English">Anglais</span>
+        </div>
+      </div>
+
+      <div class="tl-item reveal">
+        <div class="tl-dot"></div>
+        <div class="tl-period" data-fr="Juillet 2023 — Janvier 2024" data-en="July 2023 — January 2024">Juillet 2023 — Janvier 2024</div>
+        <div class="tl-role" data-fr="Ingénieur AQ Opérationnelle" data-en="Operational QA Engineer">Ingénieur AQ Opérationnelle</div>
+        <div class="tl-company">Agence Fortil / Unither Développement — Bordeaux (33)</div>
+        <div class="tl-desc" data-fr="Intégration équipe projet pour la création d'un box de production de médicaments stériles et d'un laboratoire de microbiologie. Garantir le respect des normes qualité et sécurité. Environnement ZAC A, C et D." data-en="Project team integration for the creation of a sterile drug production unit and microbiology laboratory. Ensuring compliance with quality and safety standards. Cleanroom environment (ZAC A, C, D).">
+          Intégration équipe projet pour la création d'un box de production de médicaments stériles et d'un laboratoire de microbiologie. Garantir le respect des normes qualité et sécurité. Environnement ZAC A, C et D.
+        </div>
+        <div class="tl-tags">
+          <span class="tl-tag">ZAC A/C/D</span>
+          <span class="tl-tag" data-fr="Stérile" data-en="Sterile">Stérile</span>
+          <span class="tl-tag">BPF</span>
+          <span class="tl-tag" data-fr="Gestion de projet" data-en="Project management">Gestion de projet</span>
+        </div>
+      </div>
+
+      <div class="tl-item reveal">
+        <div class="tl-dot"></div>
+        <div class="tl-period" data-fr="Avril — Juin 2023" data-en="April — June 2023">Avril — Juin 2023</div>
+        <div class="tl-role" data-fr="Ingénieur AQ Opérationnelle" data-en="Operational QA Engineer">Ingénieur AQ Opérationnelle</div>
+        <div class="tl-company">PIERRE FABRE — Aignan (32)</div>
+        <div class="tl-desc" data-fr="Traitement des déviations (pastilles), mise en place de CAPA, rédaction de rapports de conformité, gestion des réclamations clients en zone de production." data-en="Deviation processing (tablets), CAPA implementation, compliance report writing, customer complaint management in the production area.">
+          Traitement des déviations (pastilles), mise en place de CAPA, rédaction de rapports de conformité, gestion des réclamations clients en zone de production.
+        </div>
+        <div class="tl-tags">
+          <span class="tl-tag" data-fr="Déviation" data-en="Deviation">Déviation</span>
+          <span class="tl-tag">CAPA</span>
+          <span class="tl-tag" data-fr="Forme sèche" data-en="Solid form">Forme sèche</span>
+          <span class="tl-tag">BPF</span>
+        </div>
+      </div>
+
+      <div class="tl-item reveal">
+        <div class="tl-dot"></div>
+        <div class="tl-period" data-fr="Septembre 2021 — Août 2022 (Alternance)" data-en="September 2021 — August 2022 (Work-study)">Septembre 2021 — Août 2022 (Alternance)</div>
+        <div class="tl-role" data-fr="Ingénieur AQ Fournisseur" data-en="Supplier QA Engineer">Ingénieur AQ Fournisseur</div>
+        <div class="tl-company">FAREVA — Amboise (37)</div>
+        <div class="tl-desc" data-fr="État des lieux des impuretés élémentaires (ICH Q3D) pour API, excipients et articles de conditionnement. Évaluation du risque process pour formes sèche, injectable et inhaler." data-en="Assessment of elemental impurities (ICH Q3D) for APIs, excipients and packaging materials. Process risk evaluation for solid, injectable and inhalation forms.">
+          État des lieux des impuretés élémentaires (ICH Q3D) pour API, excipients et articles de conditionnement. Évaluation du risque process pour formes sèche, injectable et inhaler.
+        </div>
+        <div class="tl-tags">
+          <span class="tl-tag">ICH Q3D</span>
+          <span class="tl-tag">BPF / BPL</span>
+          <span class="tl-tag" data-fr="Injectable" data-en="Injectable">Injectable</span>
+          <span class="tl-tag" data-fr="Inhaler" data-en="Inhaler">Inhaler</span>
+          <span class="tl-tag" data-fr="Analyse de risque" data-en="Risk analysis">Analyse de risque</span>
+        </div>
+      </div>
+
+      <div class="tl-item reveal">
+        <div class="tl-dot"></div>
+        <div class="tl-period" data-fr="Avril — Juillet 2021 (Stage)" data-en="April — July 2021 (Internship)">Avril — Juillet 2021 (Stage)</div>
+        <div class="tl-role" data-fr="Ingénieur Chef de Projet R&D" data-en="Project Lead Engineer R&D">Ingénieur Chef de Projet R&D</div>
+        <div class="tl-company">LentiVec — CHU Angers (49)</div>
+        <div class="tl-desc" data-fr="Suivi de la production de vecteurs lentiviraux (clonage jusqu'à la production finale). Rédaction de protocoles, validation des modes opératoires, tarification du coût de production." data-en="Monitoring lentiviral vector production (from cloning to final production). Protocol writing, validation of standard operating procedures, production cost pricing.">
+          Suivi de la production de vecteurs lentiviraux (clonage jusqu'à la production finale). Rédaction de protocoles, validation des modes opératoires, tarification du coût de production.
+        </div>
+        <div class="tl-tags">
+          <span class="tl-tag" data-fr="Vecteurs lentiviraux" data-en="Lentiviral vectors">Vecteurs lentiviraux</span>
+          <span class="tl-tag" data-fr="R&D" data-en="R&D">R&D</span>
+          <span class="tl-tag">Protocoles</span>
+          <span class="tl-tag" data-fr="Biotechnologie" data-en="Biotechnology">Biotechnologie</span>
+        </div>
+      </div>
+
+      <div class="tl-item reveal">
+        <div class="tl-dot"></div>
+        <div class="tl-period" data-fr="Mars — Septembre 2020 (Stage)" data-en="March — September 2020 (Internship)">Mars — Septembre 2020 (Stage)</div>
+        <div class="tl-role" data-fr="Ingénieur Qualité & Amélioration Continue" data-en="Quality & Continuous Improvement Engineer">Ingénieur Qualité & Amélioration Continue</div>
+        <div class="tl-company">SANOFI CHIMIE — Aramon (30)</div>
+        <div class="tl-desc" data-fr="Amélioration du processus de formation des techniciens biotechnologies. Suivi de 3 productions en zone ZAC B et C. Réalisation d'une vidéo-formation. Mise en place de CAPA sur la partie injectable." data-en="Improvement of biotech technician training processes. Monitoring of 3 productions in clean rooms B and C. Creation of a training video. CAPA implementation for the injectable line.">
+          Amélioration du processus de formation des techniciens biotechnologies. Suivi de 3 productions en zone ZAC B et C. Réalisation d'une vidéo-formation. Mise en place de CAPA sur la partie injectable.
+        </div>
+        <div class="tl-tags">
+          <span class="tl-tag">ZAC B/C</span>
+          <span class="tl-tag" data-fr="Bioproduction" data-en="Bioproduction">Bioproduction</span>
+          <span class="tl-tag">CAPA</span>
+          <span class="tl-tag">SANOFI</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── COMPETENCES ── -->
+<section id="competences" aria-label="Compétences">
+  <div class="section-wrap">
+    <p class="s-eyebrow reveal" data-fr="Expertise" data-en="Expertise">Expertise</p>
+    <h2 class="s-title reveal" data-fr="Compétences" data-en="Skills">Compétences</h2>
+    <p class="s-sub reveal" data-fr="Maîtrise des processus pharmaceutiques, de la qualité opérationnelle et des outils analytiques." data-en="Expertise in pharmaceutical processes, operational quality, and analytical tools.">Maîtrise des processus pharmaceutiques, de la qualité opérationnelle et des outils analytiques.</p>
+
+    <div class="skills-grid">
+
+      <div class="skill-block reveal">
+        <div class="skill-block-icon">⚗️</div>
+        <div class="skill-block-title" data-fr="Assurance Qualité" data-en="Quality Assurance">Assurance Qualité</div>
+        <ul class="skill-list">
+          <li data-fr="Traitement des déviations" data-en="Deviation management">Traitement des déviations</li>
+          <li data-fr="Mise en place de CAPA" data-en="CAPA implementation">Mise en place de CAPA</li>
+          <li data-fr="Rapports de conformité" data-en="Compliance reports">Rapports de conformité</li>
+          <li data-fr="Procédures &amp; modes opératoires" data-en="Procedures &amp; SOPs">Procédures &amp; modes opératoires</li>
+          <li data-fr="Analyses de risques" data-en="Risk analyses">Analyses de risques</li>
+          <li data-fr="Gestion des réclamations clients" data-en="Customer complaint management">Gestion des réclamations clients</li>
+        </ul>
+      </div>
+
+      <div class="skill-block reveal">
+        <div class="skill-block-icon">🔬</div>
+        <div class="skill-block-title" data-fr="Process &amp; Production" data-en="Process &amp; Production">Process &amp; Production</div>
+        <ul class="skill-list">
+          <li data-fr="Upstream / Downstream" data-en="Upstream / Downstream">Upstream / Downstream</li>
+          <li data-fr="Culture cellulaire in vitro" data-en="In vitro cell culture">Culture cellulaire in vitro</li>
+          <li data-fr="Environnement ZAC (A, B, C, D)" data-en="Cleanroom (A, B, C, D)">Environnement ZAC (A, B, C, D)</li>
+          <li data-fr="Formes : sèche, liquide, injectable, inhaler" data-en="Forms: solid, liquid, injectable, inhaler">Formes : sèche, liquide, injectable, inhaler</li>
+          <li data-fr="Qualification &amp; Validation" data-en="Qualification &amp; Validation">Qualification &amp; Validation</li>
+          <li data-fr="Performance Industrielle" data-en="Industrial Performance">Performance Industrielle</li>
+        </ul>
+      </div>
+
+      <div class="skill-block reveal">
+        <div class="skill-block-icon">📊</div>
+        <div class="skill-block-title" data-fr="Analyses &amp; Outils" data-en="Analytics &amp; Tools">Analyses &amp; Outils</div>
+        <ul class="skill-list">
+          <li>HPLC, CPG</li>
+          <li>Spectro UV-Visible, Kjeldahl</li>
+          <li data-fr="Enzymologie, Immunologie" data-en="Enzymology, Immunology">Enzymologie, Immunologie</li>
+          <li data-fr="Biologie moléculaire &amp; cellulaire" data-en="Molecular &amp; cell biology">Biologie moléculaire &amp; cellulaire</li>
+          <li>Generis 5+, Pack Office</li>
+          <li data-fr="Logiciels de gestion des risques" data-en="Risk management software">Logiciels de gestion des risques</li>
+        </ul>
+      </div>
+
+      <div class="skill-block reveal">
+        <div class="skill-block-icon">📋</div>
+        <div class="skill-block-title" data-fr="Réglementation &amp; Audit" data-en="Regulation &amp; Audit">Réglementation &amp; Audit</div>
+        <ul class="skill-list">
+          <li data-fr="BPF, BPC, BPL" data-en="GMP, GCP, GLP">BPF, BPC, BPL</li>
+          <li>ISO 9001, ICH E6 R3</li>
+          <li data-fr="Réglementation US cGMP" data-en="US cGMP Regulation">Réglementation US cGMP</li>
+          <li data-fr="Réglementation Européenne" data-en="European Regulation">Réglementation Européenne</li>
+          <li data-fr="Auditeur interne / externe" data-en="Internal / external auditor">Auditeur interne / externe</li>
+          <li data-fr="Formation du personnel" data-en="Staff training">Formation du personnel</li>
+        </ul>
+      </div>
+
+      <div class="skill-block reveal">
+        <div class="skill-block-icon">🌍</div>
+        <div class="skill-block-title" data-fr="Langues" data-en="Languages">Langues</div>
+        <div style="margin-top:0.5rem">
+          <div class="lang-item">
+            <div class="lang-header">
+              <span class="lang-name" data-fr="Français" data-en="French">Français</span>
+              <span class="lang-level" data-fr="Langue maternelle" data-en="Native">Langue maternelle</span>
+            </div>
+            <div class="lang-bar"><div class="lang-fill" data-width="100"></div></div>
+          </div>
+          <div class="lang-item">
+            <div class="lang-header">
+              <span class="lang-name" data-fr="Anglais" data-en="English">Anglais</span>
+              <span class="lang-level">C1</span>
+            </div>
+            <div class="lang-bar"><div class="lang-fill" data-width="85"></div></div>
+          </div>
+          <div class="lang-item">
+            <div class="lang-header">
+              <span class="lang-name" data-fr="Espagnol" data-en="Spanish">Espagnol</span>
+              <span class="lang-level">B2</span>
+            </div>
+            <div class="lang-bar"><div class="lang-fill" data-width="68"></div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="skill-block reveal">
+        <div class="skill-block-icon">🏋️</div>
+        <div class="skill-block-title" data-fr="Qualités personnelles" data-en="Personal Qualities">Qualités personnelles</div>
+        <ul class="skill-list">
+          <li data-fr="Esprit d'équipe &amp; leadership" data-en="Team spirit &amp; leadership">Esprit d'équipe &amp; leadership</li>
+          <li data-fr="Réactivité &amp; disponibilité" data-en="Reactivity &amp; availability">Réactivité &amp; disponibilité</li>
+          <li data-fr="Sens du détail &amp; précision" data-en="Attention to detail &amp; precision">Sens du détail &amp; précision</li>
+          <li data-fr="Solidité psychologique" data-en="Psychological resilience">Solidité psychologique</li>
+          <li data-fr="Sens des responsabilités" data-en="Sense of responsibility">Sens des responsabilités</li>
+          <li data-fr="Altruisme" data-en="Altruism">Altruisme</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── FORMATION ── -->
+<section id="formation" aria-label="Formation">
+  <div class="section-wrap">
+    <p class="s-eyebrow reveal" data-fr="Diplômes" data-en="Degrees">Diplômes</p>
+    <h2 class="s-title reveal" data-fr="Formation" data-en="Education">Formation</h2>
+    <p class="s-sub reveal" data-fr="Cursus scientifique spécialisé en biotechnologie et bioproduction pharmaceutique." data-en="Scientific curriculum specialised in biotechnology and pharmaceutical bioproduction.">Cursus scientifique spécialisé en biotechnologie et bioproduction pharmaceutique.</p>
+
+    <div class="edu-grid">
+
+      <div class="edu-card reveal">
+        <div class="edu-year">2020 – 2022</div>
+        <div class="edu-title" data-fr="Master Management en Bioproduction — Bac+5" data-en="Master's in Bioproduction Management — Bac+5">Master Management en Bioproduction — Bac+5</div>
+        <div class="edu-school" data-fr="Université de Pharmacie de Tours (37)" data-en="University of Pharmacy of Tours (37)">Université de Pharmacie de Tours (37)</div>
+      </div>
+
+      <div class="edu-card reveal">
+        <div class="edu-year">2019 – 2020</div>
+        <div class="edu-title" data-fr="TSBI — Technicien Supérieur Biotech. Industrielle — Bac+3" data-en="TSBI — Industrial Biotech. Senior Technician — Bac+3">TSBI — Technicien Supérieur Biotech. Industrielle — Bac+3</div>
+        <div class="edu-school" data-fr="Groupe IMT de Tours (37)" data-en="IMT Group, Tours (37)">Groupe IMT de Tours (37)</div>
+      </div>
+
+      <div class="edu-card reveal">
+        <div class="edu-year">2019</div>
+        <div class="edu-title" data-fr="BTS ANABIOTEC — Bac+2" data-en="BTS ANABIOTEC — Bac+2">BTS ANABIOTEC — Bac+2</div>
+        <div class="edu-school" data-fr="Lycée agricole de Vendôme (41)" data-en="Agricultural high school of Vendôme (41)">Lycée agricole de Vendôme (41)</div>
+      </div>
+
+      <div class="edu-card reveal">
+        <div class="edu-year" data-fr="Habilitation" data-en="Certification">Habilitation</div>
+        <div class="edu-title" data-fr="Niveau 2 — Procédures Expérimentales en Laboratoire sur rongeurs" data-en="Level 2 — Experimental Procedures in Laboratory on Rodents">Niveau 2 — Procédures Expérimentales en Laboratoire sur rongeurs</div>
+        <div class="edu-school">LEGTA de Vendôme (41)</div>
+      </div>
+
+      <div class="edu-card reveal">
+        <div class="edu-year">2016</div>
+        <div class="edu-title" data-fr="Brevet de Préparation Militaire Marine" data-en="Naval Military Preparatory Certificate">Brevet de Préparation Militaire Marine</div>
+        <div class="edu-school"></div>
+      </div>
+
+      <div class="edu-card reveal">
+        <div class="edu-year" data-fr="Baccalauréat" data-en="High School Diploma">Baccalauréat</div>
+        <div class="edu-title" data-fr="Technologique STAV — Sciences et Technologies de l'Agronomie et du Vivant" data-en="Technological STAV — Agronomy and Life Sciences">Technologique STAV — Sciences et Technologies de l'Agronomie et du Vivant</div>
+        <div class="edu-school" data-fr="LEGTA de Fondettes (37) — Option aménagement du territoire" data-en="LEGTA de Fondettes (37) — Land use option">LEGTA de Fondettes (37) — Option aménagement du territoire</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── POMPIER ── -->
+<section id="pompier" aria-label="Sapeur-Pompier">
+  <div class="section-wrap">
+    <p class="s-eyebrow reveal" style="color:var(--red)" data-fr="Engagement citoyen" data-en="Civic commitment">Engagement citoyen</p>
+    <h2 class="s-title reveal" data-fr="Sapeur-Pompier" data-en="Firefighter">Sapeur-Pompier</h2>
+    <p class="s-sub reveal" data-fr="Un engagement de plus de 14 ans au service de la sécurité civile, passé professionnel depuis janvier 2026." data-en="Over 14 years of commitment to civil safety, active full-time since January 2026.">Un engagement de plus de 14 ans au service de la sécurité civile, passé professionnel depuis janvier 2026.</p>
+
+    <div class="pompier-grid">
+      <div class="pompier-text reveal">
+        <p data-fr="Sapeur-Pompier Volontaire depuis 2011, puis professionnel depuis janvier 2026 au SDIS33. Cet engagement forge des qualités essentielles : réactivité, sang-froid, esprit d'équipe et sens des responsabilités." data-en="Volunteer Firefighter since 2011, then professional since January 2026 at SDIS33. This commitment builds essential qualities: reactivity, composure, team spirit and sense of responsibility.">
+          Sapeur-Pompier Volontaire depuis 2011, puis professionnel depuis janvier 2026 au SDIS33. Cet engagement forge des qualités essentielles : réactivité, sang-froid, esprit d'équipe et sens des responsabilités.
+        </p>
+        <p data-fr="Des renforts saisonniers (SDIS 64, 85, 74) témoignent d'une mobilité et d'une adaptabilité à différents contextes d'intervention." data-en="Seasonal reinforcements (SDIS 64, 85, 74) demonstrate mobility and adaptability to different intervention contexts.">
+          Des renforts saisonniers (SDIS 64, 85, 74) témoignent d'une mobilité et d'une adaptabilité à différents contextes d'intervention.
+        </p>
+        <div class="pompier-qualities">
+          <span class="quality-pill" data-fr="Disponible" data-en="Available">Disponible</span>
+          <span class="quality-pill" data-fr="Réactif" data-en="Reactive">Réactif</span>
+          <span class="quality-pill" data-fr="Esprit d'équipe" data-en="Team spirit">Esprit d'équipe</span>
+          <span class="quality-pill" data-fr="Courage" data-en="Courage">Courage</span>
+          <span class="quality-pill" data-fr="Altruiste" data-en="Altruistic">Altruiste</span>
+          <span class="quality-pill" data-fr="Solide psychologiquement" data-en="Mentally strong">Solide psychologiquement</span>
+          <span class="quality-pill" data-fr="Sens du détail" data-en="Detail-oriented">Sens du détail</span>
+          <span class="quality-pill" data-fr="Sportif" data-en="Athletic">Sportif</span>
+        </div>
+      </div>
+      <div class="pompier-history reveal">
+        <div class="pompier-history-title" data-fr="Historique" data-en="History">Historique</div>
+        <div class="pompier-row">
+          <span class="pompier-row-label" data-fr="SDIS33 — Professionnel" data-en="SDIS33 — Professional">SDIS33 — Professionnel</span>
+          <span class="pompier-row-val" data-fr="jan. 2026 →" data-en="Jan. 2026 →">jan. 2026 →</span>
+        </div>
+        <div class="pompier-row">
+          <span class="pompier-row-label" data-fr="SDIS33 — Volontaire" data-en="SDIS33 — Volunteer">SDIS33 — Volontaire</span>
+          <span class="pompier-row-val" data-fr="juin 2024 – jan. 2026" data-en="Jun. 2024 – Jan. 2026">juin 2024 – jan. 2026</span>
+        </div>
+        <div class="pompier-row">
+          <span class="pompier-row-label" data-fr="SDIS37 — Volontaire" data-en="SDIS37 — Volunteer">SDIS37 — Volontaire</span>
+          <span class="pompier-row-val" data-fr="jan. 2016 – juin 2024" data-en="Jan. 2016 – Jun. 2024">jan. 2016 – juin 2024</span>
+        </div>
+        <div class="pompier-row">
+          <span class="pompier-row-label" data-fr="Renfort SDIS64" data-en="Reinforcement SDIS64">Renfort SDIS64</span>
+          <span class="pompier-row-val" data-fr="hiver 2022–2023" data-en="Winter 2022–2023">hiver 2022–2023</span>
+        </div>
+        <div class="pompier-row">
+          <span class="pompier-row-label" data-fr="Renfort SDIS85, SDIS74" data-en="Reinforcement SDIS85, SDIS74">Renfort SDIS85, SDIS74</span>
+          <span class="pompier-row-val" data-fr="étés 2018, 2019" data-en="Summers 2018, 2019">étés 2018, 2019</span>
+        </div>
+        <div class="pompier-row">
+          <span class="pompier-row-label" data-fr="École JSP — SDIS37" data-en="Youth Firefighter School">École JSP — SDIS37</span>
+          <span class="pompier-row-val">2011 – 2015</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CONTACT ── -->
+<section id="contact" aria-label="Contact">
+  <div class="section-wrap">
+    <p class="s-eyebrow reveal" data-fr="Disponible" data-en="Available">Disponible</p>
+    <h2 class="s-title reveal" data-fr="Me contacter" data-en="Get in touch">Me contacter</h2>
+    <p class="s-sub reveal" data-fr="N'hésitez pas à me contacter pour toute opportunité professionnelle." data-en="Feel free to reach out for any professional opportunity.">N'hésitez pas à me contacter pour toute opportunité professionnelle.</p>
+
+    <div class="contact-grid">
+      <div class="reveal">
+        <div class="contact-links">
+          <a href="mailto:matthieu.balluais@sfr.fr" class="contact-link">
+            <div class="contact-link-icon">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            </div>
+            matthieu.balluais@sfr.fr
+          </a>
+          <a href="tel:+33662564357" class="contact-link">
+            <div class="contact-link-icon">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.35a2 2 0 0 1 1.99-2.18h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 9a16 16 0 0 0 6 6l.92-.92a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            </div>
+            06.62.56.43.57
+          </a>
+          <span class="contact-link" style="cursor:default">
+            <div class="contact-link-icon">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            </div>
+            Talence, Bordeaux (33)
+          </span>
+        </div>
+      </div>
+      <div class="contact-dispo reveal">
+        <div class="contact-dispo-label" data-fr="Disponibilité" data-en="Availability">Disponibilité</div>
+        <div class="contact-dispo-date" data-fr="Avril 2026" data-en="April 2026">Avril 2026</div>
+        <div class="contact-dispo-note" data-fr="Ouvert aux opportunités en Assurance Qualité et Bioproduction Pharmaceutique. Mobilité possible." data-en="Open to opportunities in Quality Assurance and Pharmaceutical Bioproduction. Geographic mobility possible.">
+          Ouvert aux opportunités en Assurance Qualité et Bioproduction Pharmaceutique. Mobilité possible.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <p data-fr="© 2025 Matthieu Balluais — Ingénieur Biotechnologie" data-en="© 2025 Matthieu Balluais — Biotechnology Engineer">© 2025 Matthieu Balluais — Ingénieur Biotechnologie</p>
+</footer>
+
+<script>
+  /* ── THEME ── */
+  var themeBtn = document.getElementById('theme-toggle');
+  themeBtn.addEventListener('click', function () {
+    var current = document.documentElement.getAttribute('data-theme');
+    var next = current === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', next);
+    localStorage.setItem('matt-theme', next);
+  });
+
+  /* ── LANGUAGE ── */
+  var lang = 'fr';
+  var langBtn = document.getElementById('lang-toggle');
+
+  function applyLang(l) {
+    lang = l;
+    langBtn.textContent = l === 'fr' ? 'EN' : 'FR';
+    document.documentElement.setAttribute('lang', l);
+    document.querySelectorAll('[data-' + l + ']').forEach(function (el) {
+      var val = el.getAttribute('data-' + l);
+      if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
+        el.placeholder = val;
+      } else {
+        el.innerHTML = val;
+      }
+    });
+  }
+
+  langBtn.addEventListener('click', function () {
+    applyLang(lang === 'fr' ? 'en' : 'fr');
+  });
+
+  /* ── BURGER ── */
+  var burger = document.getElementById('burger');
+  var drawer = document.getElementById('nav-drawer');
+  burger.addEventListener('click', function () {
+    var open = burger.classList.toggle('open');
+    drawer.classList.toggle('open', open);
+    burger.setAttribute('aria-expanded', open);
+    drawer.setAttribute('aria-hidden', !open);
+  });
+  drawer.querySelectorAll('a').forEach(function (a) {
+    a.addEventListener('click', function () {
+      burger.classList.remove('open');
+      drawer.classList.remove('open');
+      burger.setAttribute('aria-expanded', false);
+      drawer.setAttribute('aria-hidden', true);
+    });
+  });
+
+  /* ── SCROLL REVEAL ── */
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        /* animate lang bars */
+        e.target.querySelectorAll('.lang-fill').forEach(function (bar) {
+          bar.style.width = bar.getAttribute('data-width') + '%';
+        });
+        /* if bar itself */
+        if (e.target.classList.contains('lang-fill')) {
+          e.target.style.width = e.target.getAttribute('data-width') + '%';
+        }
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12 });
+
+  document.querySelectorAll('.reveal').forEach(function (el) { io.observe(el); });
+  /* also observe lang bars individually for trigger */
+  document.querySelectorAll('.lang-fill').forEach(function (el) { io.observe(el); });
+
+  /* ── BACK TO TOP ── */
+  var btt = document.getElementById('back-to-top');
+  window.addEventListener('scroll', function () {
+    btt.classList.toggle('visible', window.scrollY > 400);
+  }, { passive: true });
+  btt.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+
+  /* ── NAV SCROLL INDICATOR ── */
+  var navLinks = document.querySelectorAll('.nav-links a:not(.nav-cv)');
+  var sections = Array.from(document.querySelectorAll('section[id]'));
+  window.addEventListener('scroll', function () {
+    var scrollY = window.scrollY + 120;
+    var current = '';
+    sections.forEach(function (s) {
+      if (s.offsetTop <= scrollY) current = s.id;
+    });
+    navLinks.forEach(function (a) {
+      a.classList.toggle('active', a.getAttribute('href') === '#' + current);
+    });
+  }, { passive: true });
+
+  /* active style */
+  var style = document.createElement('style');
+  style.textContent = '.nav-links a.active { color: var(--text) !important; } .nav-links a.active::after { left: 0.3rem !important; right: 0.3rem !important; }';
+  document.head.appendChild(style);
+</script>
+</body>
+</html>

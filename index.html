@@ -110,9 +110,11 @@
     .nav-links a:hover { color: var(--text); }
     .nav-links a:not(.nav-cv)::after {
       content: ''; position: absolute; bottom: 0.4rem; left: 50%; right: 50%;
-      height: 1px; background: var(--accent); transition: left .22s, right .22s;
+      height: 1px; background: var(--accent);
+      opacity: 0;
+      transition: left .22s, right .22s, opacity .22s;
     }
-    .nav-links a:not(.nav-cv):hover::after { left: 0.3rem; right: 0.3rem; }
+    .nav-links a:not(.nav-cv):hover::after { left: 0.3rem; right: 0.3rem; opacity: 1; }
     .nav-cv { color: var(--accent) !important; border: 1px solid var(--accent) !important; padding: 0.4rem 0.9rem !important; transition: all 0.25s !important; }
     .nav-cv:hover { background: var(--accent) !important; color: var(--bg) !important; }
 
@@ -142,7 +144,7 @@
     /* ── HAMBURGER ── */
     .burger {
       display: none; flex-direction: column; gap: 5px; background: none; border: none;
-      cursor: pointer; padding: 4px;
+      cursor: pointer; padding: 4px; flex-shrink: 0;
     }
     .burger span { display: block; width: 22px; height: 1.5px; background: var(--text2); transition: all 0.3s; }
     .burger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
@@ -150,20 +152,28 @@
     .burger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
 
     .nav-drawer {
-      display: none; position: fixed; top: 0; right: 0; bottom: 0; width: 260px;
+      display: flex; position: fixed; top: 0; right: 0; bottom: 0; width: 260px;
       background: var(--surface); border-left: 1px solid var(--border2);
       padding: 5rem 2rem 2rem; flex-direction: column; gap: 0; z-index: 150;
       transform: translateX(100%); transition: transform 0.3s ease;
+      visibility: hidden;
     }
-    .nav-drawer.open { transform: translateX(0); }
+    .nav-drawer.open { transform: translateX(0); visibility: visible; }
     .nav-drawer a { font-family: 'DM Mono', monospace; font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); text-decoration: none; padding: 0.9rem 0; border-bottom: 1px solid var(--border); display: block; transition: color 0.2s; }
     .nav-drawer a:hover { color: var(--accent); }
+
+    /* Overlay sombre derrière la drawer mobile */
+    .nav-overlay {
+      display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5);
+      z-index: 140; opacity: 0; transition: opacity 0.3s;
+    }
+    .nav-overlay.open { display: block; opacity: 1; }
 
     /* ── HERO ── */
     #accueil {
       min-height: 100vh; display: flex; flex-direction: column;
       justify-content: center; align-items: center; text-align: center;
-      padding: 8rem 2rem 5rem; position: relative; overflow: hidden;
+      padding: 8rem 2rem 9rem; position: relative; overflow: hidden;
     }
     #accueil::before {
       content: ''; position: absolute; inset: 0; pointer-events: none;
@@ -322,10 +332,10 @@
     .quality-pill { font-family: 'DM Mono', monospace; font-size: 0.58rem; letter-spacing: 0.12em; text-transform: uppercase; padding: 0.3rem 0.65rem; border: 1px solid var(--red); color: var(--red); border-radius: 2px; }
     .pompier-history { background: var(--surface); border: 1px solid var(--border); padding: 1.5rem; border-radius: 3px; }
     .pompier-history-title { font-family: 'DM Mono', monospace; font-size: 0.6rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--red); margin-bottom: 1rem; }
-    .pompier-row { display: flex; justify-content: space-between; align-items: baseline; padding: 0.5rem 0; border-bottom: 1px solid var(--border); font-size: 0.88rem; }
+    .pompier-row { display: grid; grid-template-columns: 1fr auto; align-items: baseline; gap: 1rem; padding: 0.5rem 0; border-bottom: 1px solid var(--border); font-size: 0.88rem; }
     .pompier-row:last-child { border-bottom: none; }
     .pompier-row-label { color: var(--text); }
-    .pompier-row-val { color: var(--muted); font-family: 'DM Mono', monospace; font-size: 0.7rem; letter-spacing: 0.08em; }
+    .pompier-row-val { color: var(--muted); font-family: 'DM Mono', monospace; font-size: 0.7rem; letter-spacing: 0.08em; text-align: right; white-space: nowrap; }
 
     /* ── CONTACT ── */
     .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: start; }
@@ -364,7 +374,7 @@
       .about-grid, .pompier-grid, .contact-grid { grid-template-columns: 1fr; }
       .skills-grid { grid-template-columns: 1fr 1fr; }
       .edu-grid { grid-template-columns: 1fr; }
-      .about-stats { grid-template-columns: repeat(4, 1fr); }
+      .about-stats { grid-template-columns: repeat(3, 1fr); }
     }
     @media (max-width: 680px) {
       nav { padding: 1rem 1.5rem; }
@@ -391,7 +401,7 @@
 
 <!-- ── NAV ── -->
 <nav>
-  <a href="#accueil" class="nav-logo">M.<span>B</span></a>
+  <a href="#accueil" class="nav-logo">Matthieu <span>Balluais</span></a>
   <ul class="nav-links">
     <li><a href="#profil"     data-fr="Profil"      data-en="About">Profil</a></li>
     <li><a href="#experience" data-fr="Expérience"  data-en="Experience">Expérience</a></li>
@@ -412,6 +422,9 @@
   </div>
 </nav>
 
+<!-- overlay mobile -->
+<div class="nav-overlay" id="nav-overlay" aria-hidden="true"></div>
+
 <!-- nav drawer mobile -->
 <nav class="nav-drawer" id="nav-drawer" aria-hidden="true">
   <a href="#profil"      data-fr="Profil"       data-en="About">Profil</a>
@@ -427,8 +440,8 @@
   <div class="hero-content">
     <p class="hero-eyebrow" data-fr="Ingénieur · Biotechnologie" data-en="Engineer · Biotechnology">Ingénieur · Biotechnologie</p>
     <h1 class="hero-title">
-      Matthieu
-      <span class="hero-name-line"><em>Balluais</em></span>
+      Portfolio
+      <span class="hero-name-line"><em>Matthieu</em> Balluais</span>
     </h1>
     <div class="hero-rule"></div>
     <p class="hero-sub" data-fr="<strong>Bioproduction Industrielle Pharmaceutique</strong> — Assurance Qualité Opérationnelle &amp; Fournisseur. Expérience en environnements BPF, BPC, BPL." data-en="<strong>Industrial Pharmaceutical Bioproduction</strong> — Operational &amp; Supplier Quality Assurance. Experience in GMP, GCP, GLP environments.">
@@ -479,7 +492,7 @@
           </div>
           <div class="about-info-row">
             <span class="about-info-label" data-fr="Dispo." data-en="Available">Dispo.</span>
-            <span class="about-info-value" data-fr="Avril 2026" data-en="April 2026">Avril 2026</span>
+            <span class="about-info-value" data-fr="Avril 2028" data-en="April 2028">Avril 2028</span>
           </div>
         </div>
       </div>
@@ -495,10 +508,6 @@
         <div class="stat-card reveal">
           <div class="stat-number">ISO</div>
           <div class="stat-label" data-fr="Auditeur 9001 / ICH E6" data-en="Auditor 9001 / ICH E6">Auditeur 9001 / ICH E6</div>
-        </div>
-        <div class="stat-card reveal">
-          <div class="stat-number">14+</div>
-          <div class="stat-label" data-fr="Ans sapeur-pompier" data-en="Years as firefighter">Ans sapeur-pompier</div>
         </div>
       </div>
     </div>
@@ -516,20 +525,25 @@
 
       <div class="tl-item reveal">
         <div class="tl-dot"></div>
-        <div class="tl-period" data-fr="Janvier 2026 — Actuel (temps plein)" data-en="January 2026 — Present (full-time)">Janvier 2026 — Actuel (temps plein)</div>
-        <div class="tl-role" data-fr="Sapeur-Pompier Professionnel" data-en="Professional Firefighter">Sapeur-Pompier Professionnel</div>
-        <div class="tl-company">SDIS 33 — Gironde</div>
+        <div class="tl-period" data-fr="Mai 2026 — Actuel · CDI" data-en="May 2026 — Present · Permanent contract">Mai 2026 — Actuel · CDI</div>
+        <div class="tl-role" data-fr="Responsable Pôle Assurance Qualité" data-en="Quality Assurance Manager">Responsable Pôle Assurance Qualité</div>
+        <div class="tl-company">Laboratoire GlobalSkin France — Bordeaux, Nouvelle-Aquitaine</div>
+        <div class="tl-desc" data-fr="Gestion de la mise en place du SMQ et du fonctionnement dans l'usine. Libérateur des dossiers de lots, audit, veille réglementaire." data-en="Management of the QMS implementation and plant operations. Batch record release, auditing, regulatory watch.">
+          Gestion de la mise en place du SMQ et du fonctionnement dans l'usine. Libérateur des dossiers de lots, audit, veille réglementaire.
+        </div>
         <div class="tl-tags">
-          <span class="tl-tag" data-fr="Urgence" data-en="Emergency">Urgence</span>
-          <span class="tl-tag" data-fr="Secours" data-en="Rescue">Secours</span>
-          <span class="tl-tag" data-fr="Disponibilité immédiate" data-en="Immediate response">Disponibilité immédiate</span>
+          <span class="tl-tag">ISO 13485</span>
+          <span class="tl-tag">ISO 22716</span>
+          <span class="tl-tag">SMQ</span>
+          <span class="tl-tag" data-fr="Libérateur lots" data-en="Batch release">Libérateur lots</span>
+          <span class="tl-tag" data-fr="Audit" data-en="Audit">Audit</span>
         </div>
       </div>
 
       <div class="tl-item reveal">
         <div class="tl-dot"></div>
         <div class="tl-period" data-fr="Avril 2024 — Décembre 2025" data-en="April 2024 — December 2025">Avril 2024 — Décembre 2025</div>
-        <div class="tl-role" data-fr="Responsable Pôle Assurance Qualité" data-en="Head of Quality Assurance">Responsable Pôle Assurance Qualité</div>
+        <div class="tl-role" data-fr="Responsable Pôle Assurance Qualité" data-en="Quality Assurance Manager">Responsable Pôle Assurance Qualité</div>
         <div class="tl-company">EUROFINS EVIC Product Testing France — Bordeaux (33)</div>
         <div class="tl-desc" data-fr="Mise en place et animation de la politique Qualité. Conception et mise à jour du manuel qualité. Auditeur interne et sous-traitants Europe/International. Rédaction d'analyses de risques. Communication en anglais avec les sous-traitants." data-en="Implementation and management of the Quality policy. Design and update of the quality manual. Internal and international subcontractor auditing. Risk analysis writing. English communication with suppliers.">
           Mise en place et animation de la politique Qualité. Conception et mise à jour du manuel qualité. Auditeur interne et sous-traitants Europe/International. Rédaction d'analyses de risques. Communication en anglais avec les sous-traitants.
@@ -660,6 +674,9 @@
           <li data-fr="Formes : sèche, liquide, injectable, inhaler" data-en="Forms: solid, liquid, injectable, inhaler">Formes : sèche, liquide, injectable, inhaler</li>
           <li data-fr="Qualification &amp; Validation" data-en="Qualification &amp; Validation">Qualification &amp; Validation</li>
           <li data-fr="Performance Industrielle" data-en="Industrial Performance">Performance Industrielle</li>
+          <li>Spectro UV-Visible, Kjeldahl</li>
+          <li data-fr="Enzymologie, Immunologie" data-en="Enzymology, Immunology">Enzymologie, Immunologie</li>
+          <li data-fr="Biologie moléculaire &amp; cellulaire" data-en="Molecular &amp; cell biology">Biologie moléculaire &amp; cellulaire</li>
         </ul>
       </div>
 
@@ -668,9 +685,6 @@
         <div class="skill-block-title" data-fr="Analyses &amp; Outils" data-en="Analytics &amp; Tools">Analyses &amp; Outils</div>
         <ul class="skill-list">
           <li>HPLC, CPG</li>
-          <li>Spectro UV-Visible, Kjeldahl</li>
-          <li data-fr="Enzymologie, Immunologie" data-en="Enzymology, Immunology">Enzymologie, Immunologie</li>
-          <li data-fr="Biologie moléculaire &amp; cellulaire" data-en="Molecular &amp; cell biology">Biologie moléculaire &amp; cellulaire</li>
           <li>Generis 5+, Pack Office</li>
           <li data-fr="Logiciels de gestion des risques" data-en="Risk management software">Logiciels de gestion des risques</li>
         </ul>
@@ -682,6 +696,7 @@
         <ul class="skill-list">
           <li data-fr="BPF, BPC, BPL" data-en="GMP, GCP, GLP">BPF, BPC, BPL</li>
           <li>ISO 9001, ICH E6 R3</li>
+          <li>ISO 13485, ISO 22716</li>
           <li data-fr="Réglementation US cGMP" data-en="US cGMP Regulation">Réglementation US cGMP</li>
           <li data-fr="Réglementation Européenne" data-en="European Regulation">Réglementation Européenne</li>
           <li data-fr="Auditeur interne / externe" data-en="Internal / external auditor">Auditeur interne / externe</li>
@@ -788,12 +803,12 @@
   <div class="section-wrap">
     <p class="s-eyebrow reveal" style="color:var(--red)" data-fr="Engagement citoyen" data-en="Civic commitment">Engagement citoyen</p>
     <h2 class="s-title reveal" data-fr="Sapeur-Pompier" data-en="Firefighter">Sapeur-Pompier</h2>
-    <p class="s-sub reveal" data-fr="Un engagement de plus de 14 ans au service de la sécurité civile, passé professionnel depuis janvier 2026." data-en="Over 14 years of commitment to civil safety, active full-time since January 2026.">Un engagement de plus de 14 ans au service de la sécurité civile, passé professionnel depuis janvier 2026.</p>
+    <p class="s-sub reveal" data-fr="Un engagement de plus de 14 ans au service de la sécurité civile." data-en="Over 14 years of commitment to civil safety.">Un engagement de plus de 14 ans au service de la sécurité civile.</p>
 
     <div class="pompier-grid">
       <div class="pompier-text reveal">
-        <p data-fr="Sapeur-Pompier Volontaire depuis 2011, puis professionnel depuis janvier 2026 au SDIS33. Cet engagement forge des qualités essentielles : réactivité, sang-froid, esprit d'équipe et sens des responsabilités." data-en="Volunteer Firefighter since 2011, then professional since January 2026 at SDIS33. This commitment builds essential qualities: reactivity, composure, team spirit and sense of responsibility.">
-          Sapeur-Pompier Volontaire depuis 2011, puis professionnel depuis janvier 2026 au SDIS33. Cet engagement forge des qualités essentielles : réactivité, sang-froid, esprit d'équipe et sens des responsabilités.
+        <p data-fr="Sapeur-Pompier Volontaire depuis 2011 au SDIS33. Cet engagement forge des qualités essentielles : réactivité, sang-froid, esprit d'équipe et sens des responsabilités." data-en="Volunteer Firefighter since 2011 at SDIS33. This commitment builds essential qualities: reactivity, composure, team spirit and sense of responsibility.">
+          Sapeur-Pompier Volontaire depuis 2011 au SDIS33. Cet engagement forge des qualités essentielles : réactivité, sang-froid, esprit d'équipe et sens des responsabilités.
         </p>
         <p data-fr="Des renforts saisonniers (SDIS 64, 85, 74) témoignent d'une mobilité et d'une adaptabilité à différents contextes d'intervention." data-en="Seasonal reinforcements (SDIS 64, 85, 74) demonstrate mobility and adaptability to different intervention contexts.">
           Des renforts saisonniers (SDIS 64, 85, 74) témoignent d'une mobilité et d'une adaptabilité à différents contextes d'intervention.
@@ -812,12 +827,8 @@
       <div class="pompier-history reveal">
         <div class="pompier-history-title" data-fr="Historique" data-en="History">Historique</div>
         <div class="pompier-row">
-          <span class="pompier-row-label" data-fr="SDIS33 — Professionnel" data-en="SDIS33 — Professional">SDIS33 — Professionnel</span>
-          <span class="pompier-row-val" data-fr="jan. 2026 →" data-en="Jan. 2026 →">jan. 2026 →</span>
-        </div>
-        <div class="pompier-row">
           <span class="pompier-row-label" data-fr="SDIS33 — Volontaire" data-en="SDIS33 — Volunteer">SDIS33 — Volontaire</span>
-          <span class="pompier-row-val" data-fr="juin 2024 – jan. 2026" data-en="Jun. 2024 – Jan. 2026">juin 2024 – jan. 2026</span>
+          <span class="pompier-row-val" data-fr="juin 2024 → actuel" data-en="Jun. 2024 → present">juin 2024 → actuel</span>
         </div>
         <div class="pompier-row">
           <span class="pompier-row-label" data-fr="SDIS37 — Volontaire" data-en="SDIS37 — Volunteer">SDIS37 — Volontaire</span>
@@ -868,11 +879,17 @@
             </div>
             Talence, Bordeaux (33)
           </span>
+          <a href="https://www.linkedin.com/in/matthieu-balluais-24933a198" target="_blank" rel="noopener" class="contact-link">
+            <div class="contact-link-icon">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+            </div>
+            LinkedIn — Matthieu Balluais
+          </a>
         </div>
       </div>
       <div class="contact-dispo reveal">
         <div class="contact-dispo-label" data-fr="Disponibilité" data-en="Availability">Disponibilité</div>
-        <div class="contact-dispo-date" data-fr="Avril 2026" data-en="April 2026">Avril 2026</div>
+        <div class="contact-dispo-date" data-fr="Avril 2028" data-en="April 2028">Avril 2028</div>
         <div class="contact-dispo-note" data-fr="Ouvert aux opportunités en Assurance Qualité et Bioproduction Pharmaceutique. Mobilité possible." data-en="Open to opportunities in Quality Assurance and Pharmaceutical Bioproduction. Geographic mobility possible.">
           Ouvert aux opportunités en Assurance Qualité et Bioproduction Pharmaceutique. Mobilité possible.
         </div>
@@ -921,19 +938,32 @@
   /* ── BURGER ── */
   var burger = document.getElementById('burger');
   var drawer = document.getElementById('nav-drawer');
+  var overlay = document.getElementById('nav-overlay');
+
+  function closeDrawer() {
+    burger.classList.remove('open');
+    drawer.classList.remove('open');
+    overlay.classList.remove('open');
+    burger.setAttribute('aria-expanded', 'false');
+    drawer.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+  }
+
+  function openDrawer() {
+    burger.classList.add('open');
+    drawer.classList.add('open');
+    overlay.classList.add('open');
+    burger.setAttribute('aria-expanded', 'true');
+    drawer.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+  }
+
   burger.addEventListener('click', function () {
-    var open = burger.classList.toggle('open');
-    drawer.classList.toggle('open', open);
-    burger.setAttribute('aria-expanded', open);
-    drawer.setAttribute('aria-hidden', !open);
+    if (burger.classList.contains('open')) { closeDrawer(); } else { openDrawer(); }
   });
+  overlay.addEventListener('click', closeDrawer);
   drawer.querySelectorAll('a').forEach(function (a) {
-    a.addEventListener('click', function () {
-      burger.classList.remove('open');
-      drawer.classList.remove('open');
-      burger.setAttribute('aria-expanded', false);
-      drawer.setAttribute('aria-hidden', true);
-    });
+    a.addEventListener('click', closeDrawer);
   });
 
   /* ── SCROLL REVEAL ── */
@@ -981,7 +1011,7 @@
 
   /* active style */
   var style = document.createElement('style');
-  style.textContent = '.nav-links a.active { color: var(--text) !important; } .nav-links a.active::after { left: 0.3rem !important; right: 0.3rem !important; }';
+  style.textContent = '.nav-links a.active { color: var(--text) !important; } .nav-links a.active::after { left: 0.3rem !important; right: 0.3rem !important; opacity: 1 !important; }';
   document.head.appendChild(style);
 </script>
 </body>

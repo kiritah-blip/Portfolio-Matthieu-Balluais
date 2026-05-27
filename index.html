@@ -365,6 +365,41 @@
     #back-to-top.visible { opacity: 1; pointer-events: auto; }
     #back-to-top:hover { color: var(--accent); border-color: var(--accent); }
 
+    /* ── EXPAND BUTTON ── */
+    .tl-expand-btn {
+      display: inline-flex; align-items: center; gap: 0.45rem; margin-top: 0.9rem;
+      background: none; border: 1px solid var(--border2); border-radius: 2px;
+      font-family: 'DM Mono', monospace; font-size: 0.58rem; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--muted); cursor: pointer;
+      padding: 0.32rem 0.7rem; transition: color 0.2s, border-color 0.2s;
+    }
+    .tl-expand-btn:hover { color: var(--accent); border-color: var(--accent); }
+    .tl-expand-btn svg { transition: transform 0.28s; flex-shrink: 0; }
+    .tl-expand-btn.open svg { transform: rotate(180deg); }
+
+    .tl-resp {
+      max-height: 0; overflow: hidden;
+      transition: max-height 0.45s ease, margin-top 0.3s ease;
+      margin-top: 0;
+    }
+    .tl-resp.open { max-height: 700px; margin-top: 0.85rem; }
+
+    .tl-resp-title {
+      font-family: 'DM Mono', monospace; font-size: 0.6rem; letter-spacing: 0.18em;
+      text-transform: uppercase; color: var(--accent); margin-bottom: 0.6rem;
+    }
+    .tl-resp-list { list-style: none; display: flex; flex-direction: column; gap: 0.38rem; }
+    .tl-resp-list li {
+      font-size: 0.85rem; color: var(--text2);
+      display: flex; align-items: baseline; gap: 0.5rem;
+    }
+    .tl-resp-list li::before { content: '—'; color: var(--accent); font-size: 0.7rem; flex-shrink: 0; }
+
+    .tl-resp-soon {
+      font-family: 'DM Mono', monospace; font-size: 0.65rem;
+      letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); font-style: normal;
+    }
+
     /* ── ANIMATIONS ── */
     @keyframes fadeUp { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
     @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
@@ -523,6 +558,7 @@
 
     <div class="timeline">
 
+      <!-- GlobalSkin — Actuel -->
       <div class="tl-item reveal">
         <div class="tl-dot"></div>
         <div class="tl-period" data-fr="Mai 2026 — Actuel · CDI" data-en="May 2026 — Present · Permanent contract">Mai 2026 — Actuel · CDI</div>
@@ -538,32 +574,62 @@
           <span class="tl-tag" data-fr="Libérateur lots" data-en="Batch release">Libérateur lots</span>
           <span class="tl-tag" data-fr="Audit" data-en="Audit">Audit</span>
         </div>
+        <div class="tl-resp">
+          <p class="tl-resp-soon" data-fr="Prochainement" data-en="Coming soon">Prochainement</p>
+        </div>
+        <button class="tl-expand-btn" aria-expanded="false">
+          <span class="btn-text" data-fr="Voir plus" data-en="See more">Voir plus</span>
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
       </div>
 
+      <!-- EUROFINS -->
       <div class="tl-item reveal">
         <div class="tl-dot"></div>
         <div class="tl-period" data-fr="Avril 2024 — Décembre 2025" data-en="April 2024 — December 2025">Avril 2024 — Décembre 2025</div>
         <div class="tl-role" data-fr="Responsable Pôle Assurance Qualité" data-en="Quality Assurance Manager">Responsable Pôle Assurance Qualité</div>
         <div class="tl-company">EUROFINS EVIC Product Testing France — Bordeaux (33)</div>
-        <div class="tl-desc" data-fr="Mise en place et animation de la politique Qualité. Conception et mise à jour du manuel qualité. Auditeur interne et sous-traitants Europe/International. Rédaction d'analyses de risques. Communication en anglais avec les sous-traitants." data-en="Implementation and management of the Quality policy. Design and update of the quality manual. Internal and international subcontractor auditing. Risk analysis writing. English communication with suppliers.">
-          Mise en place et animation de la politique Qualité. Conception et mise à jour du manuel qualité. Auditeur interne et sous-traitants Europe/International. Rédaction d'analyses de risques. Communication en anglais avec les sous-traitants.
+        <div class="tl-desc" data-fr="Mise en place et animation de la politique Qualité. Conception et mise à jour du manuel qualité. Auditeur interne et sous-traitants Europe/International." data-en="Implementation and management of the Quality policy. Design and update of the quality manual. Internal and international subcontractor auditing.">
+          Mise en place et animation de la politique Qualité. Conception et mise à jour du manuel qualité. Auditeur interne et sous-traitants Europe/International.
         </div>
         <div class="tl-tags">
           <span class="tl-tag">ISO 9001</span>
           <span class="tl-tag">ICH E6</span>
           <span class="tl-tag" data-fr="Audit" data-en="Auditing">Audit</span>
-          <span class="tl-tag" data-fr="CAPA" data-en="CAPA">CAPA</span>
+          <span class="tl-tag">CAPA</span>
           <span class="tl-tag" data-fr="Anglais" data-en="English">Anglais</span>
         </div>
+        <div class="tl-resp">
+          <p class="tl-resp-title" data-fr="Responsabilités" data-en="Responsibilities">Responsabilités</p>
+          <ul class="tl-resp-list">
+            <li data-fr="Concevoir et mettre en place le système Qualité, en évaluer l'efficacité et le faire évoluer" data-en="Design and implement the Quality system, evaluate its effectiveness and improve it">Concevoir et mettre en place le système Qualité, en évaluer l'efficacité et le faire évoluer</li>
+            <li data-fr="Concevoir et gérer les référentiels de l'entreprise (processus, procédures...)" data-en="Design and manage the company's quality references (processes, procedures...)">Concevoir et gérer les référentiels de l'entreprise (processus, procédures...)</li>
+            <li data-fr="Rédaction d'analyses de risques" data-en="Risk analysis writing">Rédaction d'analyses de risques</li>
+            <li data-fr="Identifier et analyser les points de non-Qualité et proposer des actions correctives et préventives" data-en="Identify and analyse non-quality issues and propose corrective and preventive actions">Identifier et analyser les points de non-Qualité et proposer des actions correctives et préventives</li>
+            <li data-fr="Rédiger le Manuel Qualité interne" data-en="Write the internal Quality Manual">Rédiger le Manuel Qualité interne</li>
+            <li data-fr="Animer des groupes de résolution de problèmes" data-en="Lead problem-solving groups">Animer des groupes de résolution de problèmes</li>
+            <li data-fr="Elaborer les actions de sensibilisation du personnel" data-en="Develop staff awareness actions">Elaborer les actions de sensibilisation du personnel</li>
+            <li data-fr="Réaliser des diagnostics et audits qualité interne" data-en="Carry out internal quality diagnostics and audits">Réaliser des diagnostics et audits qualité interne</li>
+            <li data-fr="Réaliser des audits chez les sous-traitants Europe/International" data-en="Conduct audits at European/International subcontractors">Réaliser des audits chez les sous-traitants Europe/International</li>
+            <li data-fr="Mener des enquêtes de satisfaction client" data-en="Conduct customer satisfaction surveys">Mener des enquêtes de satisfaction client</li>
+            <li data-fr="Maîtrise de la norme ISO 9001 et de l'ICH E6 (Bonne Pratique Clinique)" data-en="Expertise in ISO 9001 and ICH E6 (Good Clinical Practice)">Maîtrise de la norme ISO 9001 et de l'ICH E6 (Bonne Pratique Clinique)</li>
+            <li data-fr="Communication en anglais (écrit et oral) avec les sous-traitants" data-en="English communication (written and oral) with subcontractors">Communication en anglais (écrit et oral) avec les sous-traitants</li>
+          </ul>
+        </div>
+        <button class="tl-expand-btn" aria-expanded="false">
+          <span class="btn-text" data-fr="Voir plus" data-en="See more">Voir plus</span>
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
       </div>
 
+      <!-- UNITHER -->
       <div class="tl-item reveal">
         <div class="tl-dot"></div>
         <div class="tl-period" data-fr="Juillet 2023 — Janvier 2024" data-en="July 2023 — January 2024">Juillet 2023 — Janvier 2024</div>
         <div class="tl-role" data-fr="Ingénieur AQ Opérationnelle" data-en="Operational QA Engineer">Ingénieur AQ Opérationnelle</div>
         <div class="tl-company">Agence Fortil / Unither Développement — Bordeaux (33)</div>
-        <div class="tl-desc" data-fr="Intégration équipe projet pour la création d'un box de production de médicaments stériles et d'un laboratoire de microbiologie. Garantir le respect des normes qualité et sécurité. Environnement ZAC A, C et D." data-en="Project team integration for the creation of a sterile drug production unit and microbiology laboratory. Ensuring compliance with quality and safety standards. Cleanroom environment (ZAC A, C, D).">
-          Intégration équipe projet pour la création d'un box de production de médicaments stériles et d'un laboratoire de microbiologie. Garantir le respect des normes qualité et sécurité. Environnement ZAC A, C et D.
+        <div class="tl-desc" data-fr="Intégration équipe projet pour la création d'un box de production de médicaments stériles et d'un laboratoire de microbiologie. Environnement ZAC A, C et D." data-en="Project team integration for the creation of a sterile drug production unit and a microbiology laboratory. Cleanroom ZAC A, C and D.">
+          Intégration équipe projet pour la création d'un box de production de médicaments stériles et d'un laboratoire de microbiologie. Environnement ZAC A, C et D.
         </div>
         <div class="tl-tags">
           <span class="tl-tag">ZAC A/C/D</span>
@@ -571,15 +637,31 @@
           <span class="tl-tag">BPF</span>
           <span class="tl-tag" data-fr="Gestion de projet" data-en="Project management">Gestion de projet</span>
         </div>
+        <div class="tl-resp">
+          <p class="tl-resp-title" data-fr="Responsabilités" data-en="Responsibilities">Responsabilités</p>
+          <ul class="tl-resp-list">
+            <li data-fr="Rédaction de procédures et modes opératoires" data-en="Writing procedures and standard operating procedures">Rédaction de procédures et modes opératoires</li>
+            <li data-fr="Rédaction d'analyses de risques" data-en="Risk analysis writing">Rédaction d'analyses de risques</li>
+            <li data-fr="Gestion de projet" data-en="Project management">Gestion de projet</li>
+            <li data-fr="Rapports d'expertises dans l'amélioration des pratiques actuelles en zone" data-en="Expertise reports on improving current practices in clean rooms">Rapports d'expertises dans l'amélioration des pratiques actuelles en zone</li>
+            <li data-fr="Organisation de réunions" data-en="Meeting organisation">Organisation de réunions</li>
+            <li data-fr="Communication en anglais (écrit) avec les fournisseurs" data-en="English communication (written) with suppliers">Communication en anglais (écrit) avec les fournisseurs</li>
+          </ul>
+        </div>
+        <button class="tl-expand-btn" aria-expanded="false">
+          <span class="btn-text" data-fr="Voir plus" data-en="See more">Voir plus</span>
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
       </div>
 
+      <!-- PIERRE FABRE -->
       <div class="tl-item reveal">
         <div class="tl-dot"></div>
         <div class="tl-period" data-fr="Avril — Juin 2023" data-en="April — June 2023">Avril — Juin 2023</div>
         <div class="tl-role" data-fr="Ingénieur AQ Opérationnelle" data-en="Operational QA Engineer">Ingénieur AQ Opérationnelle</div>
         <div class="tl-company">PIERRE FABRE — Aignan (32)</div>
-        <div class="tl-desc" data-fr="Traitement des déviations (pastilles), mise en place de CAPA, rédaction de rapports de conformité, gestion des réclamations clients en zone de production." data-en="Deviation processing (tablets), CAPA implementation, compliance report writing, customer complaint management in the production area.">
-          Traitement des déviations (pastilles), mise en place de CAPA, rédaction de rapports de conformité, gestion des réclamations clients en zone de production.
+        <div class="tl-desc" data-fr="Garantir la qualité, la sécurité et la conformité des produits à travers les missions de qualité opérationnelle. Veiller à la bonne application des BPF." data-en="Ensure quality, safety and compliance of products through operational quality missions. Ensure proper application of GMP.">
+          Garantir la qualité, la sécurité et la conformité des produits à travers les missions de qualité opérationnelle. Veiller à la bonne application des BPF.
         </div>
         <div class="tl-tags">
           <span class="tl-tag" data-fr="Déviation" data-en="Deviation">Déviation</span>
@@ -587,8 +669,23 @@
           <span class="tl-tag" data-fr="Forme sèche" data-en="Solid form">Forme sèche</span>
           <span class="tl-tag">BPF</span>
         </div>
+        <div class="tl-resp">
+          <p class="tl-resp-title" data-fr="Responsabilités" data-en="Responsibilities">Responsabilités</p>
+          <ul class="tl-resp-list">
+            <li data-fr="Traitement des déviations (taches sur des pastilles / déformation de pastilles)" data-en="Deviation processing (tablet stains / tablet deformation)">Traitement des déviations (taches sur des pastilles / déformation de pastilles)</li>
+            <li data-fr="Mise en place de CAPA (tri du lot, investigation en production pour trouver l'origine)" data-en="CAPA implementation (batch sorting, production investigation to find the root cause)">Mise en place de CAPA (tri du lot, investigation en production pour trouver l'origine)</li>
+            <li data-fr="Attribution de CAPA au service contrôle qualité / production" data-en="CAPA assignment to quality control / production department">Attribution de CAPA au service contrôle qualité / production</li>
+            <li data-fr="Rédaction de rapport sur la conformité des lots" data-en="Batch compliance report writing">Rédaction de rapport sur la conformité des lots</li>
+            <li data-fr="Gestion des réclamations clients produits et magasin sur la zone de production" data-en="Management of product and warehouse customer complaints in the production area">Gestion des réclamations clients produits et magasin sur la zone de production</li>
+          </ul>
+        </div>
+        <button class="tl-expand-btn" aria-expanded="false">
+          <span class="btn-text" data-fr="Voir plus" data-en="See more">Voir plus</span>
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
       </div>
 
+      <!-- FAREVA -->
       <div class="tl-item reveal">
         <div class="tl-dot"></div>
         <div class="tl-period" data-fr="Septembre 2021 — Août 2022 (Alternance)" data-en="September 2021 — August 2022 (Work-study)">Septembre 2021 — Août 2022 (Alternance)</div>
@@ -604,31 +701,60 @@
           <span class="tl-tag" data-fr="Inhaler" data-en="Inhaler">Inhaler</span>
           <span class="tl-tag" data-fr="Analyse de risque" data-en="Risk analysis">Analyse de risque</span>
         </div>
+        <div class="tl-resp">
+          <p class="tl-resp-title" data-fr="Responsabilités" data-en="Responsibilities">Responsabilités</p>
+          <ul class="tl-resp-list">
+            <li data-fr="Evaluation et rédaction des analyses de risques d'impuretés élémentaires dans les produits pharmaceutiques humains et vétérinaires" data-en="Evaluation and writing of elemental impurity risk analyses in human and veterinary pharmaceutical products">Evaluation et rédaction des analyses de risques d'impuretés élémentaires dans les produits pharmaceutiques humains et vétérinaires</li>
+            <li data-fr="Collecte et mise à jour des déclarations qui ne répondaient plus aux attentes réglementaires du Service AQF" data-en="Collection and update of declarations that no longer met the regulatory requirements of the AQF Department">Collecte et mise à jour des déclarations qui ne répondaient plus aux attentes réglementaires du Service AQF</li>
+            <li data-fr="Analyse du risque process de fabrication et conditionnement pour évaluer le risque de présence IE dans le process (forme sèche, injectable et inhaler)" data-en="Manufacturing and packaging process risk analysis to evaluate the risk of elemental impurity presence (solid, injectable and inhaler forms)">Analyse du risque process de fabrication et conditionnement pour évaluer le risque de présence IE dans le process (forme sèche, injectable et inhaler)</li>
+            <li data-fr="Rédaction de l'évaluation de l'analyse de risque en fonction des critères définis dans les guidelines" data-en="Writing the risk analysis evaluation according to criteria defined in the guidelines">Rédaction de l'évaluation de l'analyse de risque en fonction des critères définis dans les guidelines</li>
+            <li data-fr="BPF, BPL" data-en="GMP, GLP">BPF, BPL</li>
+            <li data-fr="Communication en anglais (oral + écrit) avec les fournisseurs" data-en="English communication (oral + written) with suppliers">Communication en anglais (oral + écrit) avec les fournisseurs</li>
+          </ul>
+        </div>
+        <button class="tl-expand-btn" aria-expanded="false">
+          <span class="btn-text" data-fr="Voir plus" data-en="See more">Voir plus</span>
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
       </div>
 
+      <!-- LentiVec -->
       <div class="tl-item reveal">
         <div class="tl-dot"></div>
         <div class="tl-period" data-fr="Avril — Juillet 2021 (Stage)" data-en="April — July 2021 (Internship)">Avril — Juillet 2021 (Stage)</div>
         <div class="tl-role" data-fr="Ingénieur Chef de Projet R&D" data-en="Project Lead Engineer R&D">Ingénieur Chef de Projet R&D</div>
         <div class="tl-company">LentiVec — CHU Angers (49)</div>
-        <div class="tl-desc" data-fr="Suivi de la production de vecteurs lentiviraux (clonage jusqu'à la production finale). Rédaction de protocoles, validation des modes opératoires, tarification du coût de production." data-en="Monitoring lentiviral vector production (from cloning to final production). Protocol writing, validation of standard operating procedures, production cost pricing.">
-          Suivi de la production de vecteurs lentiviraux (clonage jusqu'à la production finale). Rédaction de protocoles, validation des modes opératoires, tarification du coût de production.
+        <div class="tl-desc" data-fr="Suivi de la production de vecteurs lentiviraux (clonage jusqu'à la production finale). Plateforme de R&D." data-en="Monitoring lentiviral vector production (from cloning to final production). R&D platform.">
+          Suivi de la production de vecteurs lentiviraux (clonage jusqu'à la production finale). Plateforme de R&D.
         </div>
         <div class="tl-tags">
           <span class="tl-tag" data-fr="Vecteurs lentiviraux" data-en="Lentiviral vectors">Vecteurs lentiviraux</span>
-          <span class="tl-tag" data-fr="R&D" data-en="R&D">R&D</span>
+          <span class="tl-tag">R&D</span>
           <span class="tl-tag">Protocoles</span>
           <span class="tl-tag" data-fr="Biotechnologie" data-en="Biotechnology">Biotechnologie</span>
         </div>
+        <div class="tl-resp">
+          <p class="tl-resp-title" data-fr="Responsabilités" data-en="Responsibilities">Responsabilités</p>
+          <ul class="tl-resp-list">
+            <li data-fr="Rédaction de protocoles pour chaque étape du process" data-en="Protocol writing for each process step">Rédaction de protocoles pour chaque étape du process</li>
+            <li data-fr="Validation des modes opératoires" data-en="Validation of standard operating procedures">Validation des modes opératoires</li>
+            <li data-fr="Tarification du coût de production" data-en="Production cost pricing">Tarification du coût de production</li>
+          </ul>
+        </div>
+        <button class="tl-expand-btn" aria-expanded="false">
+          <span class="btn-text" data-fr="Voir plus" data-en="See more">Voir plus</span>
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
       </div>
 
+      <!-- SANOFI -->
       <div class="tl-item reveal">
         <div class="tl-dot"></div>
         <div class="tl-period" data-fr="Mars — Septembre 2020 (Stage)" data-en="March — September 2020 (Internship)">Mars — Septembre 2020 (Stage)</div>
-        <div class="tl-role" data-fr="Ingénieur Qualité & Amélioration Continue" data-en="Quality & Continuous Improvement Engineer">Ingénieur Qualité & Amélioration Continue</div>
+        <div class="tl-role" data-fr="Ingénieur Qualité &amp; Amélioration Continue" data-en="Quality &amp; Continuous Improvement Engineer">Ingénieur Qualité &amp; Amélioration Continue</div>
         <div class="tl-company">SANOFI CHIMIE — Aramon (30)</div>
-        <div class="tl-desc" data-fr="Amélioration du processus de formation des techniciens biotechnologies. Suivi de 3 productions en zone ZAC B et C. Réalisation d'une vidéo-formation. Mise en place de CAPA sur la partie injectable." data-en="Improvement of biotech technician training processes. Monitoring of 3 productions in clean rooms B and C. Creation of a training video. CAPA implementation for the injectable line.">
-          Amélioration du processus de formation des techniciens biotechnologies. Suivi de 3 productions en zone ZAC B et C. Réalisation d'une vidéo-formation. Mise en place de CAPA sur la partie injectable.
+        <div class="tl-desc" data-fr="Amélioration du processus de formation des techniciens biotechnologies. Suivi de 3 productions en zone ZAC B et C. Environnement ZAC B et C." data-en="Improvement of biotech technician training processes. Monitoring of 3 productions in clean rooms B and C.">
+          Amélioration du processus de formation des techniciens biotechnologies. Suivi de 3 productions en zone ZAC B et C.
         </div>
         <div class="tl-tags">
           <span class="tl-tag">ZAC B/C</span>
@@ -636,6 +762,21 @@
           <span class="tl-tag">CAPA</span>
           <span class="tl-tag">SANOFI</span>
         </div>
+        <div class="tl-resp">
+          <p class="tl-resp-title" data-fr="Responsabilités" data-en="Responsibilities">Responsabilités</p>
+          <ul class="tl-resp-list">
+            <li data-fr="Suivi des techniciens en 3x8 pour comprendre le processus de fabrication en zone" data-en="Monitoring of 3-shift technicians to understand the manufacturing process in the clean room">Suivi des techniciens en 3x8 pour comprendre le processus de fabrication en zone</li>
+            <li data-fr="Identifier les étapes critiques de production" data-en="Identify critical production steps">Identifier les étapes critiques de production</li>
+            <li data-fr="Appréhender les modes opératoires et procédures" data-en="Understanding standard operating procedures">Appréhender les modes opératoires et procédures</li>
+            <li data-fr="Filmer les étapes de production" data-en="Film the production steps">Filmer les étapes de production</li>
+            <li data-fr="Réalisation du vidéo-formation en tant que support à la procédure" data-en="Production of a training video as a procedure support tool">Réalisation du vidéo-formation en tant que support à la procédure</li>
+            <li data-fr="Mise en place de CAPA sur la partie injectable dans le cas de contamination (formation, analyses)" data-en="CAPA implementation on the injectable line in case of contamination (training, analyses)">Mise en place de CAPA sur la partie injectable dans le cas de contamination (formation, analyses)</li>
+          </ul>
+        </div>
+        <button class="tl-expand-btn" aria-expanded="false">
+          <span class="btn-text" data-fr="Voir plus" data-en="See more">Voir plus</span>
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
       </div>
 
     </div>
@@ -1013,6 +1154,26 @@
   var style = document.createElement('style');
   style.textContent = '.nav-links a.active { color: var(--text) !important; } .nav-links a.active::after { left: 0.3rem !important; right: 0.3rem !important; opacity: 1 !important; }';
   document.head.appendChild(style);
+
+  /* ── EXPAND BUTTONS ── */
+  document.querySelectorAll('.tl-expand-btn').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var resp = btn.previousElementSibling; // .tl-resp juste avant le bouton
+      var isOpen = resp.classList.toggle('open');
+      btn.classList.toggle('open', isOpen);
+      btn.setAttribute('aria-expanded', isOpen);
+      var textEl = btn.querySelector('.btn-text');
+      if (isOpen) {
+        textEl.setAttribute('data-fr', 'Voir moins');
+        textEl.setAttribute('data-en', 'See less');
+        textEl.textContent = (lang === 'fr') ? 'Voir moins' : 'See less';
+      } else {
+        textEl.setAttribute('data-fr', 'Voir plus');
+        textEl.setAttribute('data-en', 'See more');
+        textEl.textContent = (lang === 'fr') ? 'Voir plus' : 'See more';
+      }
+    });
+  });
 </script>
 </body>
 </html>
